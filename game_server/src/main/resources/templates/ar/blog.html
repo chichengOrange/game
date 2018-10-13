@@ -56,9 +56,14 @@
               url: 'game/replay/list?userId=1&token='+token,
               datatype: "json",
               colModel: [
-                  { label: 'gameName', name: 'gameName', width: 50 },
-                  { label: 'replayFile', name: 'replayFile', width: 90,sortable:false },
-                  { label: 'replayContent', name: 'replayContent', width: 100 ,sortable:false}
+                  { label: 'gameName', name: 'gameName',align:'center', width: 50 },
+                  {label: 'replayFile', name: 'replayFile', width: 30,align:'center',sortable:false,formatter: function (value) {
+                          return value != null && value !="" ?
+                              '<a style="color:#337ab7;text-decoration: underline darkcyan" class="btn-sm btn-primary" href="download?path='+value+'" download="" ">下载</a>' :
+                              '<span style="color: red"  class="label label-danger">暂无记录</span>';
+                      }
+                   },
+                  { label: 'replayContent', name: 'replayContent',align:'center', width: 100 ,sortable:false}
               ],
               viewrecords: true,
               height: 385,

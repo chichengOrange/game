@@ -58,13 +58,13 @@ ul#nav li a {
   text-shadow: 1px 1px #000;
   color: #FFF;}
 
-ul#nav ul { 
+ul#nav ul {
   background: #222;}
 
-ul#nav ul li a { 
+ul#nav ul li a {
   color: #FFF;}
 
-ul#nav li.selected a, ul#nav li a:hover, ul#nav ul li a:hover, ul#nav ul li a:focus, ul#nav li.selected ul a:hover { 
+ul#nav li.selected a, ul#nav li a:hover, ul#nav ul li a:hover, ul#nav ul li a:focus, ul#nav li.selected ul a:hover {
   color: #C5E105;}
 
 a.thumb, ul.thumbs li.selected a.thumb {
@@ -82,7 +82,7 @@ div.pagination span.current {
   background: #444;
   color: #FFF;}
 
-h1, h3, h4, h5, a:hover, #logo h1, #logo h1 a:hover, 
+h1, h3, h4, h5, a:hover, #logo h1, #logo h1 a:hover,
 footer a, #slideshow-caption p, .form_settings input, .form_settings textarea,
 #blog_container h4, .blog h2, ul#nav li.selected ul a, div.image-title { 
   color: #FFF;}

@@ -4,11 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cc.common.consts.YmlDefine;
 import com.github.pagehelper.util.StringUtil;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.commons.net.util.Base64;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;

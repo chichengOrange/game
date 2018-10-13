@@ -94,9 +94,14 @@ header {
   background: transparent;
   padding: 0;}
 
-#logo h1 { 
+
+#logo h1 {
   font: normal 450% 'Jenna Sue', arial, sans-serif;
   padding: 6px 0 0 20px;}
+
+#logo h1 a{
+  font-family: "STXingkai";
+}
 
 #logo h1 a:hover { 
   text-decoration: none;}
