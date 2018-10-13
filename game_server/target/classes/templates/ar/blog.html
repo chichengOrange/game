@@ -51,9 +51,11 @@
       /*<![CDATA[*/
 
       $(function () {
-          var token = [[${param.token}]]
+          /*var token = [[${param.token}]]*/
+          var token = [[${session.token}]];
+          var userId = [[${session.user.userId}]];
           $("#jqGrid").jqGrid({
-              url: 'game/replay/list?userId=1&token='+token,
+              url: 'game/replay/list?userId='+userId+'&token='+token,
               datatype: "json",
               colModel: [
                   { label: 'gameName', name: 'gameName',align:'center', width: 50 },
