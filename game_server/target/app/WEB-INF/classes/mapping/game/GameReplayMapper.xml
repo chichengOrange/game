@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.mapper.game.GameReplayMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.model.game.GameReplay" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="game_id" property="gameId" jdbcType="BIGINT" />
+    <result column="replay_content" property="replayContent" jdbcType="VARCHAR" />
+    <result column="replay_file" property="replayFile" jdbcType="VARCHAR" />
+    <result column="replay_contract_id" property="replayContractId" jdbcType="VARCHAR" />
+    <result column="contract_status" property="contractStatus" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, game_id, replay_content, replay_file, replay_contract_id, contract_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from game_replay
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="findObjectsBySearch" resultMap="BaseResultMap" parameterType="java.lang.String">
+
+    select  <include refid="Base_Column_List"/>
+
+    from game_replay
+
+    <if test="search != null">
+      where replay_content like concat('%',#{search},'%')
+    </if>
+
+  </select>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from game_replay
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.cc.model.game.GameReplay" >
+    insert into game_replay
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="gameId != null" >
+        game_id,
+      </if>
+      <if test="replayContent != null" >
+        replay_content,
+      </if>
+      <if test="replayFile != null" >
+        replay_file,
+      </if>
+      <if test="replayContractId != null" >
+        replay_contract_id,
+      </if>
+      <if test="contractStatus != null" >
+        contract_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gameId != null" >
+        #{gameId,jdbcType=BIGINT},
+      </if>
+      <if test="replayContent != null" >
+        #{replayContent,jdbcType=VARCHAR},
+      </if>
+      <if test="replayFile != null" >
+        #{replayFile,jdbcType=VARCHAR},
+      </if>
+      <if test="replayContractId != null" >
+        #{replayContractId,jdbcType=VARCHAR},
+      </if>
+      <if test="contractStatus != null" >
+        #{contractStatus,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.model.game.GameReplay" >
+    update game_replay
+    <set >
+      <if test="gameId != null" >
+        game_id = #{gameId,jdbcType=BIGINT},
+      </if>
+      <if test="replayContent != null" >
+        replay_content = #{replayContent,jdbcType=VARCHAR},
+      </if>
+      <if test="replayFile != null" >
+        replay_file = #{replayFile,jdbcType=VARCHAR},
+      </if>
+      <if test="replayContractId != null" >
+        replay_contract_id = #{replayContractId,jdbcType=VARCHAR},
+      </if>
+      <if test="contractStatus != null" >
+        contract_status = #{contractStatus,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,53 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /app
+#中文参数乱码解决
+  http:
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+
+
+
+mybatis:
+  #mapper.xml所在位置
+  mapper-locations: classpath:mapping/*/*.xml
+  #实体类所做包
+  type-aliases-package: com.cc.model
+  #数据库空字段也返回
+  configuration:
+    call-setters-on-nulls: true
+
+
+#根据是生产还是开发切换配置文件
+spring:
+  profiles:
+    active: prod
+
+  thymeleaf:
+    cache: false
+
+
+     #热部署
+#  devtools:
+#    restart:
+#      additional-paths: src/main/java
+#      enabled: true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

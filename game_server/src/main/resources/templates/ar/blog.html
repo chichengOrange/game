@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <link  th:replace="ar/common/css"/>
+  <link href="plugins/jqgrid/ui.jqgrid.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="plugins/jqgrid/jquery-ui-1.8.16.custom.css" />
+
+  <style>
+    ul.sf-menu ul {
+      z-index: 1000;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="main">
+
+    <!-- begin header -->
+    <header th:replace="ar/common/fragment :: header">
+    </header>
+    <!-- end header -->
+
+    <!-- begin content -->
+    <div id="site_content">
+      <table id="jqGrid"></table>
+      <div id="jqGridPager"></div>
+    </div>
+    <!-- end content -->
+
+    <!-- begin footer -->
+    <footer th:replace="ar/common/fragment :: footer">
+
+    </footer>
+    <!-- end footer -->
+
+  </div>
+  <!-- javascript at the bottom for fast page loading -->
+
+  <script th:replace="ar/common/js"></script>
+
+
+
+  <script type="text/javascript" src="plugins/jqgrid/grid.locale-cn.js"></script>
+  <script type="text/javascript" src="plugins/jqgrid/jquery.jqGrid.min.js"></script>
+  <!-- initialise sooperfish menu -->
+  <script type="text/javascript" th:inline="javascript">
+
+      /*<![CDATA[*/
+
+      $(function () {
+          var token = [[${param.token}]]
+          $("#jqGrid").jqGrid({
+              url: 'game/replay/list?userId=1&token='+token,
+              datatype: "json",
+              colModel: [
+                  { label: 'gameName', name: 'gameName', width: 50 },
+                  { label: 'replayFile', name: 'replayFile', width: 90,sortable:false },
+                  { label: 'replayContent', name: 'replayContent', width: 100 ,sortable:false}
+              ],
+              viewrecords: true,
+              height: 385,
+              rowNum: 10,
+              rowList : [10,30,50],
+              rownumbers: true,
+              rownumWidth: 25,
+              autowidth:true,
+              multiselect: false,
+              pager: "#jqGridPager",
+              jsonReader : {
+                  root: "data",
+                  page: "page.currentPage",
+                  total: "page.totalPage",
+                  records: "page.totalCount"
+              },
+              prmNames : {
+                  page:"page",
+                  rows:"limit",
+                  order: "order"
+              },
+              gridComplete:function(){
+                  //隐藏grid底部滚动条
+                  $("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });
+              }
+          });
+      });
+
+      /*]]>*/
+
+  </script>
+
+
+</body>
+</html>
