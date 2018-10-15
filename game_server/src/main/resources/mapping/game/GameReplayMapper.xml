@@ -34,26 +34,23 @@
 
 
   <select id="findObjectsByUserId" resultMap="BaseResultMap">
-
-    select  r.id, r.replay_content, r.replay_file, r.replay_contract_id, r.contract_status,r.game_id,g.name gameName
-
+    select  r.id, r.replay_content, r.replay_file, r.replay_contract_id, r.contract_status,r.game_id, r.user_id,
+    g.name gameName
     from game_replay r left join game g on g.id = r.game_id
     where r.user_id= #{userId}
     <if test="search != null">
       and g.name like concat('%',#{search},'%')
     </if>
-
   </select>
 
   <select id="findObjectsByGameId" resultMap="BaseResultMap">
-    select  r.id, r.replay_content, r.replay_file, r.replay_contract_id, r.contract_status,r.user_id,u.username userName
-
+    select  r.id, r.replay_content, r.replay_file, r.replay_contract_id, r.contract_status,r.game_id, r.user_id,
+    u.username userName
     from game_replay r left join tb_user u on u.user_id = r.user_id
     where r.game_id= #{gameId}
     <if test="search != null">
       and u.username like concat('%',#{search},'%')
     </if>
-
   </select>
 
 

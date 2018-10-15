@@ -64,10 +64,10 @@
               datatype: "json",
               colModel: [
                   { label: 'gameName', name: 'gameName',align:'center', width: 50 },
-                  {label: 'replayFile', name: 'replayFile', width: 30,align:'center',sortable:false,formatter: function (value) {
+                  {label: 'replayFile', name: 'replayFile', width: 30,align:'center',sortable:false,formatter: function (value,options,data) {
                           return value != null && value !="" ?
-                              '<a style="color:#337ab7;text-decoration: underline darkcyan" class="btn-sm btn-primary" href="download?path='+value+'" download="" ">下载</a>' :
-                              '<span style="color: red"  class="label label-danger">暂无记录</span>';
+                              '<a style="color:#337ab7;text-decoration: underline darkcyan"  href="download?path='+value+'" download="" ">下载</a>' :
+                              '<span style="color: red">暂无记录</span>';
                       }
                    },
                   { label: 'replayContent', name: 'replayContent',align:'center', width: 100 ,sortable:false}
