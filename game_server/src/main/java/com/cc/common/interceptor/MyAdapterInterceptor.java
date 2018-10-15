@@ -11,6 +11,7 @@ import com.cc.common.Utils.RedisUtil;
 import com.cc.common.Utils.TokenSignUtil;
 import com.cc.common.annotation.IgnoreToken;
 import com.cc.model.user.TokenModel;
+import com.cc.model.user.UserModel;
 import com.cc.service.user.TokenService;
 import com.github.pagehelper.util.StringUtil;
 import java.io.UnsupportedEncodingException;
@@ -47,9 +48,10 @@ public class MyAdapterInterceptor implements HandlerInterceptor {
         MyUtil.setHeadByResponse(response);
         if ("OPTIONS".equals(method)) {
             return true;
-        } else {
-            System.out.println("getQueryString  ..." + request.getQueryString());
-            this.logger.info(request.getRequestURI() + "......start");
+        }
+
+
+
             String queryStr = request.getQueryString();
             String token;
             if (StringUtil.isNotEmpty(queryStr)) {
@@ -66,6 +68,15 @@ public class MyAdapterInterceptor implements HandlerInterceptor {
                     return false;
                 }
             }
+
+
+            Object user = request.getSession().getAttribute("user");
+            if(user != null && user instanceof UserModel){
+                request.setAttribute(LOGIN_USER_KEY, ((UserModel) user).getUserId());
+                return true;
+            }
+
+
 
             if (handler instanceof HandlerMethod) {
                 Annotation annotation = ((HandlerMethod)handler).getMethodAnnotation(IgnoreToken.class);
@@ -92,7 +103,7 @@ public class MyAdapterInterceptor implements HandlerInterceptor {
             } else {
                 return true;
             }
-        }
+
     }
 
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {

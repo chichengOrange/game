@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-  <link  th:replace="ar/common/css"/>
+  <link  th:replace="ar/common/css.html"/>
   <link href="plugins/jqgrid/ui.jqgrid.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="plugins/jqgrid/jquery-ui-1.8.16.custom.css" />
 
@@ -39,7 +39,7 @@
   </div>
   <!-- javascript at the bottom for fast page loading -->
 
-  <script th:replace="ar/common/js"></script>
+  <script th:replace="ar/common/js.html"></script>
 
 
 
@@ -52,10 +52,15 @@
 
       $(function () {
           /*var token = [[${param.token}]]*/
-          var token = [[${session.token}]];
           var userId = [[${session.user.userId}]];
+          if (userId == null){
+              /*跳转登陆页面*/
+          }
+
+          /*contextpath*/
+          var rootUrl=/*[[@{/}]]*/ '';
           $("#jqGrid").jqGrid({
-              url: 'game/replay/list?userId='+userId+'&token='+token,
+              url: rootUrl+'gameReplay/list?userId='+userId,
               datatype: "json",
               colModel: [
                   { label: 'gameName', name: 'gameName',align:'center', width: 50 },
@@ -72,9 +77,10 @@
               rowNum: 10,
               rowList : [10,30,50],
               rownumbers: true,
-              rownumWidth: 25,
+              rownumWidth: 30,
               autowidth:true,
               multiselect: false,
+              sortname : 'game_id',
               pager: "#jqGridPager",
               jsonReader : {
                   root: "data",

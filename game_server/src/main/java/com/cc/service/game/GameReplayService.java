@@ -12,6 +12,13 @@ import com.cc.service.BaseService;
 import java.util.List;
 
 public interface GameReplayService extends BaseService<GameReplay, GameReplayMapper> {
+    /**
+     * replay列表
+     * @param userId
+     * @param gameId
+     * @param search
+     * @return
+     */
     List<GameReplay> findReplays(Long gameId,Long userId,String search);
 
 }

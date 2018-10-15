@@ -35,7 +35,7 @@
 
   <select id="findObjectsByUserId" resultMap="BaseResultMap">
 
-    select  r.id, r.replay_content, r.replay_file, r.replay_contract_id, r.contract_status,g.name gameName
+    select  r.id, r.replay_content, r.replay_file, r.replay_contract_id, r.contract_status,r.game_id,g.name gameName
 
     from game_replay r left join game g on g.id = r.game_id
     where r.user_id= #{userId}
@@ -46,7 +46,7 @@
   </select>
 
   <select id="findObjectsByGameId" resultMap="BaseResultMap">
-    select  r.id, r.replay_content, r.replay_file, r.replay_contract_id, r.contract_status,u.username userName
+    select  r.id, r.replay_content, r.replay_file, r.replay_contract_id, r.contract_status,r.user_id,u.username userName
 
     from game_replay r left join tb_user u on u.user_id = r.user_id
     where r.game_id= #{gameId}
