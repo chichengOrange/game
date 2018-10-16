@@ -8,8 +8,6 @@ import com.cc.common.consts.GlobDefine;
  */
 public class ArraySort {
 
-    private ArraySort() {}
-
     /**
      * 堆排序
      *

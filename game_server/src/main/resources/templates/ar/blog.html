@@ -56,11 +56,9 @@
           if (userId == null){
               /*跳转登陆页面*/
           }
-
-          /*contextpath*/
-          var rootUrl=/*[[@{/}]]*/ '';
+          var contextPath=/*[[@{/}]]*/ '';
           $("#jqGrid").jqGrid({
-              url: rootUrl+'gameReplay/list?userId='+userId,
+              url: contextPath+'gameReplay/list?userId='+userId,
               datatype: "json",
               colModel: [
                   { label: 'gameName', name: 'gameName',align:'center', width: 50 },

@@ -69,9 +69,11 @@ public class GameReplayController extends BaseController {
 
         if (replay.getReplayContractId() != null){
             //去安存下载
+            // TODO: 2018/10/15  
         }
 
 
+        // TODO: 2018/10/15  
         //如果安存失败直接在服务器下载
 
         File file = new File(replay.getReplayFile());

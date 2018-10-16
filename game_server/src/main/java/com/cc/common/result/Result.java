@@ -8,7 +8,9 @@ package com.cc.common.result;
 import com.cc.common.enums.ResultCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import lombok.Data;
 
+@Data
 @JsonInclude(Include.NON_NULL)
 public class Result<T> {
     private int code;
@@ -58,35 +60,5 @@ public class Result<T> {
         return this;
     }
 
-    public int getCode() {
-        return this.code;
-    }
 
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public T getData() {
-        return this.data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public String getMessage() {
-        return this.message;
-    }
-
-    public void setMessage(String msg) {
-        this.message = msg;
-    }
-
-    public String getDetail() {
-        return this.detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
 }

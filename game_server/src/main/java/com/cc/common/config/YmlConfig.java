@@ -11,9 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(
-        prefix = "ymlmanager"
-)
+@ConfigurationProperties(prefix = "ymlmanager")
 public class YmlConfig {
     private Map<String, Object> mapProps = new HashMap();
 

@@ -11,7 +11,7 @@ public class MD5Encode {
 	            md.update(plainText.getBytes("UTF-8"));
 	            byte b[] = md.digest();
 	            int i;
-	            StringBuffer buf = new StringBuffer("");
+	            StringBuffer buf = new StringBuffer();
 	            for (int offset = 0; offset < b.length; offset++) {
 	                i = b[offset];
 	                if (i < 0)
@@ -31,6 +31,7 @@ public class MD5Encode {
 	public static void main(String[] args){
 		String str="测试Ab76";
 		String result=encryption(str);
+		System.out.println(result);
 	}
 
 }
