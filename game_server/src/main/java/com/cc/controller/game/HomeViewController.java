@@ -1,7 +1,11 @@
 package com.cc.controller.game;
 
 import com.cc.common.annotation.IgnoreToken;
+import com.cc.common.result.PageResult;
+import com.cc.model.game.Game;
 import com.cc.model.user.UserModel;
+import com.cc.service.game.GameService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,9 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 public class HomeViewController {
+    @Autowired
+    private GameService gameService;
 
     @IgnoreToken
     @GetMapping("ar/{page}")
@@ -21,6 +28,15 @@ public class HomeViewController {
         userModel.setUserId(1L);
         userModel.setUsername("zzzzz");
         request.getSession().setAttribute("user",userModel);
+
+
+       PageResult<Game> pageResult = gameService.findListByPage(1,10,null);
+
+        List<Game> gameList = (List<Game>) pageResult.getData();
+
+        model.addAttribute("selected",page);
+
+        model.addAttribute("gameList",gameList);
         return new ModelAndView("ar/"+page,"model",model);
     }
 

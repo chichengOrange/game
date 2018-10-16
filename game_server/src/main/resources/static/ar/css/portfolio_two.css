@@ -54,8 +54,9 @@ div.slideshow span.image-wrapper {
   
 div.slideshow a.advance-link {
   display: block;
-  line-height: 0; /* This should be set to be at least the height of the largest image in the slideshow with padding */
-  text-align: center;}
+  line-height: 0; /*!* This should be set to be at least the height of the largest image in the slideshow with padding *!*/
+  text-align: center;
+}
 
 div.slideshow a.advance-link:hover, div.slideshow a.advance-link:active, div.slideshow a.advance-link:visited {
   text-decoration: none;}
@@ -69,12 +70,17 @@ div.caption-container {
 span.image-caption {
   display: block;
   position: absolute;
-  bottom: 35px;
-  left: 20px;}
+  height: 125px;
+  left: 20px;
+  width: 500px;
+  bottom: 0px;
+}
 
 div.caption {
   padding: 10px 0;
-  width: 500px;}
+  width: 500px;
+
+}
   
 div.image-title {
   font: normal 130% arial, sans-serif;}
@@ -134,3 +140,36 @@ ul.thumbs img {
 div.gallery-gutter {
   clear: both;
   padding-bottom: 20px;}
+
+
+
+a.advance-link img{
+  max-height: 450px;
+  min-width: 900px;
+  float: none;
+}
+
+.portfolio_desc {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+div.portfolio_name {
+  max-width: 160px;
+  font-size: 30px;
+  font-family: STXingkai;
+  color: #C5E105;
+  overflow: hidden; /*自动隐藏文字*/
+  text-overflow: ellipsis;/*文字隐藏后添加省略号*/
+  white-space: nowrap;/*强制不换行*/
+}
+
+div.portfolio_name_out{
+  max-height: 50px;
+  padding: 0 0;
+  max-width: 160px;
+  background: url("../images/image_transparent.png");
+}

@@ -50,7 +50,13 @@ div.slideshow a.advance-link {
   
 div.slideshow a.advance-link:hover, div.slideshow a.advance-link:active, div.slideshow a.advance-link:visited {
   text-decoration: none;}
-  
+
+
+.advance-link img{
+  width: 450px;
+  height: 450px;
+}
+
 div.slideshow img {
   vertical-align: top;}
   

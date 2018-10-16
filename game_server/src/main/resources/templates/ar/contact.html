@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+  <link  th:replace="ar/common/css.html"/>
+  <!-- modernizr enables HTML5 elements and feature detects -->
+</head>
+
+<body>
+  <div id="main">
+
+    <!-- begin header -->
+    <header th:replace="ar/common/fragment :: header">
+    </header>
+    <!-- end header -->
+
+    <!-- begin content -->
+    <div id="site_content">
+      <div id="left_content" style="display: none">
+        <h1>login</h1>
+        <p>Say hello, using this contact form.</p>
+
+        <form id="login" action="" method="post">
+          <div class="form_settings">
+            <p><span>username</span><input class="contact" type="text" name="username"  value="" placehoder="password"/></p>
+            <p><span>password</span><input class="contact" type="password" name="password" value="" placehoder="password"/></p>
+           <!-- <p><span>Message</span><textarea class="contact textarea" rows="5" cols="50" name="your_message"></textarea></p>
+            <p style="line-height: 1.7em;">To help prevent spam, please enter the answer to this question:</p>-->
+            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="button"  value="login" /></p>
+          </div>
+        </form>
+      </div>
+
+
+
+      <div class="left_content">
+        <h1>Contact</h1>
+        <p>Say hello, using this contact form.</p>
+
+        <form id="register" action="" method="post">
+          <div class="form_settings">
+            <p><span>username</span><input class="contact" type="text" name="username"  value="" placehoder="password"/></p>
+            <p><span>password</span><input class="contact" type="password" name="password" value="" placehoder="password"/></p>
+            <!-- <p><span>Message</span><textarea class="contact textarea" rows="5" cols="50" name="your_message"></textarea></p>
+             <p style="line-height: 1.7em;">To help prevent spam, please enter the answer to this question:</p>-->
+            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="button"  value="register" /></p>
+          </div>
+        </form>
+      </div>
+
+
+      <div id="right_content">
+        <img src="images/contact.jpg" width="450" height="450" title="contact" alt="contact" />
+      </div>
+    </div>
+    <!-- end content -->
+
+    <!-- begin footer -->
+    <footer th:replace="ar/common/fragment :: footer">
+
+    </footer>
+    <!-- end footer -->
+  </div>
+
+  <script th:replace="ar/common/js.html"></script>
+
+  <script th:inline="javascript" >
+      /*<![CDATA[*/
+      $(document).ready(function() {
+          $('ul.sf-menu').sooperfish();
+
+          var  selected = [[${selected}]];
+          var cls =  document.getElementsByClassName(selected);
+          if (cls.length >0) {
+              cls[0].setAttribute("class","selected");
+          }
+      });
+      /*]]>*/
+  </script>
+</body>
+</html>

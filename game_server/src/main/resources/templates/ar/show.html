@@ -2,43 +2,40 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
 
-
 <head>
-    <link  th:replace="ar/common/css.html"/>
+  <link  th:replace="ar/common/css.html"/>
 </head>
 
 <body>
   <div id="main">
 
     <!-- begin header -->
-      <header th:replace="ar/common/fragment :: header">
-      </header>
+    <header th:replace="ar/common/fragment :: header">
+    </header>
     <!-- end header -->
-
+	<div class="inner_copyright">Collect from <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a></div>
     <!-- begin content -->
     <div id="site_content">
-      <div class="left_content">
-        <h1>About This Template</h1>
-        <p>This simple, fixed width website template is released under a Creative Commons Attribution 3.0 Licence. This means you are free to download and use it for personal and commercial projects. However, you <strong>must leave the '网页模板' link in the footer of the template</strong>. This template is written entirely in <strong>HTML5</strong> and <strong>CSS3</strong>.</p>
-      </div>
-      <div id="right_content">
-        <img style="float: left;" src="images/about.jpg" title="about me" alt="about me"/>
-      </div>
+      <ul class="slideshow">
+        <li class="show"><img width="950" height="450" src="images/home_1.jpg" alt="&quot;You can put a caption for your image right here&quot;" /></li>
+        <li><img width="950" height="450" src="images/home_2.jpg" alt="&quot;You can put a description of the image here if you like, or anything else if you want.&quot;" /></li>
+        <li><img width="950" height="450" src="images/home_3.jpg" alt="&quot;You can put a description of the image here if you like, or anything else if you want.&quot;" /></li>
+      </ul>
     </div>
     <!-- end content -->
 
-      <!-- begin footer -->
-      <footer th:replace="ar/common/fragment :: footer">
+    <!-- begin footer -->
+    <!-- begin footer -->
+    <footer th:replace="ar/common/fragment :: footer">
 
-      </footer>
-      <!-- end footer -->
+    </footer>
+    <!-- end footer -->
 
   </div>
   <!-- javascript at the bottom for fast page loading -->
 
   <script th:replace="ar/common/js.html"></script>
   <!-- initialise sooperfish menu -->
-
   <script th:inline="javascript" >
       /*<![CDATA[*/
       $(document).ready(function() {
