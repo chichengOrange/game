@@ -9,5 +9,8 @@ import com.cc.mapper.game.GameMapper;
 import com.cc.model.game.Game;
 import com.cc.service.BaseService;
 
+import java.util.List;
+
 public interface GameService extends BaseService<Game, GameMapper> {
+    List<String> selectAllType();
 }

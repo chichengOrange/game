@@ -69,13 +69,8 @@
   <script th:inline="javascript" >
       /*<![CDATA[*/
       $(document).ready(function() {
-          $('ul.sf-menu').sooperfish();
-
-          var  selected = [[${selected}]];
-          var cls =  document.getElementsByClassName(selected);
-          if (cls.length >0) {
-              cls[0].setAttribute("class","selected");
-          }
+          var supple =[[${supple}]];
+          suppleUI(supple);
       });
       /*]]>*/
   </script>

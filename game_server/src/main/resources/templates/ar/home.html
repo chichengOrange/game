@@ -58,17 +58,14 @@
 
       <script th:replace="ar/common/js.html"></script>
 
+
+
   <!-- initialise sooperfish menu -->
       <script th:inline="javascript" >
           /*<![CDATA[*/
           $(document).ready(function() {
-              $('ul.sf-menu').sooperfish();
-
-              var  selected = [[${selected}]];
-              var cls =  document.getElementsByClassName(selected);
-              if (cls.length >0) {
-                  cls[0].setAttribute("class","selected");
-              }
+              var supple =[[${supple}]];
+               suppleUI(supple);
           });
       /*]]>*/
   </script>
@@ -76,6 +73,7 @@
   <script type="text/javascript" src="js/jquery.opacityrollover.js"></script>
   <script type="text/javascript">
     jQuery(document).ready(function($) {
+
       // we only want these styles applied when javascript is enabled
       $('div.content').css('display', 'block');
       // initially set opacity on thumbs and add additional styling for hover effect on thumbs

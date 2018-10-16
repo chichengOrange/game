@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class HomeViewController {
@@ -34,7 +36,22 @@ public class HomeViewController {
 
         List<Game> gameList = (List<Game>) pageResult.getData();
 
-        model.addAttribute("selected",page);
+
+        List<String> types = gameService.selectAllType();
+
+        String[] tyArrats  = new String[types.size()];
+        for (int i = 0; i < types.size(); i++) {
+            String type = types.get(i);
+            tyArrats[i]=" <li><a href='category?type="+type+"'>"+type+"</a></li>";
+        }
+
+
+        //重新设置的ui
+        Map supple = new HashMap(16);
+        supple.put("types",tyArrats);
+        supple.put("selected",page);
+
+        model.addAttribute("supple",supple);
 
         model.addAttribute("gameList",gameList);
         return new ModelAndView("ar/"+page,"model",model);
