@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>管理员列表</title>
+    #parse("sys/header.html")
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <div class="form-group col-sm-2">
+                <input type="text" class="form-control" v-model="q.search" @keyup.enter="query" placeholder="游戏名/标题/描述">
+            </div>
+            <a class="btn btn-default" @click="query">查询</a>
+
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+
+            <!--<a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>-->
+
+            <!--<a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>-->
+
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal" id="form">
+            <div class="form-group">
+                <div class="col-sm-2 control-label">游戏名称</div>
+                <div class="col-sm-10">
+                    <input type="text" name="name" class="form-control" v-model="game.name" placeholder="游戏名称"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">游戏标题</div>
+                <div class="col-sm-10">
+                    <input type="text" name="title" class="form-control" v-model="game.title" placeholder="游戏标题"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">游戏描述</div>
+                <div class="col-sm-10">
+                    <textarea class="form-control" name="desc" style="height: 70px" v-model="game.description"
+                              placeholder="游戏描述"/>
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 control-label">游戏版本</div>
+                <div class="col-sm-10">
+                    <input type="text" name="version" class="form-control" v-model="game.version" placeholder="游戏版本"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 control-label">游戏类型</div>
+                <div class="col-sm-10">
+                    <select class="form-control" v-model="game.type">
+                        <option value="教育">教育</option>
+                        <option>工业</option>
+                        <option>数字营销</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 control-label">图片</div>
+                <div class="col-sm-10">
+                    <input type="file" class="form-control myAtt" id="pictureAtt" name="picture"
+                           onchange="preview(this)" accept="image/*">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <div class="col-sm-10">
+                    <div id="preview" style="display: none" class=""></div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-2 control-label">视频</div>
+                <div class="col-sm-10">
+                    <input type="file" class="form-control myAtt" id="videoAtt" name="video"
+                           accept="video/*" onchange="verPicFile(this,'video/')">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 control-label">程序包</div>
+                <div class="col-sm-10">
+                    <input type="file" class="form-control myAtt" id="packageAtt" name="package">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!--模态框 弹出框-->
+<div role="dialog" class="modal fade bs-example-modal-sm" id="layer">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--<div class="modal-header">
+                <span v-model="game.name" class="span"></span>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>-->
+            <div class="modal-body text-center">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <img id="pic" style="max-height: 100%;max-width: 98%"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="${rc.contextPath}/js/sys/game.js?_${date.systemTime}"></script>
+<script src="${rc.contextPath}/statics/libs/bootstrapvalidator.js"></script>
+<script>
+
+
+    function formValidator() {
+        $("#form").bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                name: {
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '文本框必须输入'
+                        }
+                    },
+                    stringLength: {//检测长度
+                        max: 10,
+                        message: '长度不能超过10'
+                    }
+                },
+                title: {
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '文本框必须输入'
+                        }
+                    },
+                    stringLength: {//检测长度
+                        max: 40,
+                        min: 10,
+                        message: '长度必须在10-40之间'
+                    }
+                },
+                desc: {
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '文本框必须输入'
+                        },
+                        stringLength: {//检测长度
+                            min: 10,
+                            max: 200,
+                            message: '长度必须在10-200之间'
+                        }
+                    }
+
+                },
+                version: {
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '文本框必须输入'
+                        },
+                        regexp: {//正则验证
+                            regexp: /^[1-9](.[0-9]){3}$/,
+                            message: '格式1.0.0.0，必须是4位数字'
+                        }
+                    }
+                }
+
+                /*
+                picture: {
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '图片必须上传'
+                        }
+                    }
+
+                },
+                package: {
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '视频必须上传'
+                        }
+                    }
+
+                }*/
+            }
+        });
+    }
+
+
+    //图片预览
+    function preview(file) {
+
+        var type = verPicFile(file, "image/");
+
+        if (type == false) return;
+
+        var prevDiv = document.getElementById('preview');
+        prevDiv.style.display = "block";
+        if (file.files && file.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (evt) {
+                prevDiv.innerHTML = '<img style="max-width: 180px" src="' + evt.target.result + '" />';
+            }
+            reader.readAsDataURL(file.files[0]);
+        } else {
+            prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
+        }
+    }
+
+
+    //图片类型验证 imType 限制的类型
+    function verPicFile(file, imType) {
+
+        var type = file.files[0].type;
+
+        if (type.indexOf(imType) == -1) {
+            alert('不接受此文件类型');
+            file.value = "";
+            return false;
+        }
+
+        return true;
+    }
+
+
+    //图片大小验证
+    function verPicFileBytes(file) {
+        var fileSize = 0;
+        var fileMaxSize = 1024;//1M
+        var filePath = file.value;
+        if (filePath) {
+            fileSize = file.files[0].size;
+            var size = fileSize / 1024;
+            if (size > fileMaxSize) {
+                alert("文件大小不能大于1M！");
+                file.value = "";
+                return false;
+            } else if (size <= 0) {
+                alert("文件大小不能为0M！");
+                file.value = "";
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+
+    //图片尺寸验证
+    function verPicFileSize(file) {
+        var filePath = file.value;
+        if (filePath) {
+            //读取图片数据
+            var filePic = file.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var data = e.target.result;
+                //加载图片获取图片真实宽度和高度
+                var image = new Image();
+                image.onload = function () {
+                    var width = image.width;
+                    var height = image.height;
+                    if (width == 720 | height == 1280) {
+                        alert("文件尺寸符合！");
+                    } else {
+                        alert("文件尺寸应为：720*1280！");
+                        file.value = "";
+                        return false;
+                    }
+                };
+                image.src = data;
+            };
+            reader.readAsDataURL(filePic);
+        } else {
+            return false;
+        }
+    }
+
+
+    /*
+        fields: {
+            name: {
+                validators: {
+                    notEmpty: {//检测非空,radio也可用
+                        message: '文本框必须输入'
+                    },
+                    stringLength: {//检测长度
+                        min: 6,
+                            max: 30,
+                            message: '长度必须在6-30之间'
+                    },
+                    regexp: {//正则验证
+                        regexp: /^[a-zA-Z0-9_\.]+$/,
+                            message: '所输入的字符不符要求'
+                    },
+                    remote: {//将内容发送至指定页面验证，返回验证结果，比如查询用户名是否存在
+                        url: '指定页面',
+                            message: 'The username is not available'
+                    },
+                    different: {//与指定文本框比较内容相同
+                        field: '指定文本框name',
+                            message: '不能与指定文本框内容相同'
+                    },
+                    emailAddress: {//验证email地址
+                        message: '不是正确的email地址'
+                    },
+                    identical: {//与指定控件内容比较是否相同，比如两次密码不一致
+                        field: 'confirmPassword',//指定控件name
+                            message: '输入的内容不一致'
+                    },
+                    date: {//验证指定的日期格式
+                        format: 'YYYY/MM/DD',
+                            message: '日期格式不正确'
+                    },
+                    choice: {//check控件选择的数量
+                        min: 2,
+                            max: 4,
+                            message: '必须选择2-4个选项'
+                    }
+                }
+            }
+        }*/
+</script>
+
+
+</body>
+</html>
