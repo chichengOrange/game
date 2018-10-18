@@ -43,7 +43,8 @@ div.slideshow span.image-wrapper {
   left: 0;}
   
 div.slideshow a.advance-link {
-  display: block;
+  display: table-cell;
+  vertical-align: middle;
   width: 450px;
   height: 450px; /* this should be set to be at least the height of the largest image in the slideshow */
   line-height: 0px; /* this should be set to be at least the height of the largest image in the slideshow */}
@@ -53,8 +54,10 @@ div.slideshow a.advance-link:hover, div.slideshow a.advance-link:active, div.sli
 
 
 .advance-link img{
-  width: 450px;
-  height: 450px;
+  max-width: 450px;
+  min-width: 400px;
+  max-height: 450px;
+  min-height: 360px;
 }
 
 div.slideshow img {

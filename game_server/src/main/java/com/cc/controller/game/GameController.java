@@ -1,10 +1,19 @@
 package com.cc.controller.game;
 
+import com.cc.common.Utils.FileUtils;
+import com.cc.common.Utils.IpUtils;
 import com.cc.common.annotation.IgnoreToken;
+import com.cc.common.enums.ResultCode;
+import com.cc.common.interceptor.MyAdapterInterceptor;
 import com.cc.common.result.PageResult;
+import com.cc.common.result.Result;
 import com.cc.controller.BaseController;
 import com.cc.model.game.Game;
+import com.cc.model.game.GameDownloadLog;
 import com.cc.service.game.GameService;
+
+import com.github.pagehelper.util.StringUtil;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -102,10 +112,10 @@ public class GameController extends BaseController {
         ByteBuffer buffer = ByteBuffer.allocate(1024);
         SeekableByteChannel input = Files.newByteChannel(video, StandardOpenOption.READ);
         OutputStream output = response.getOutputStream();
-        input.position((long)start);
+        input.position((long) start);
 
         int bytesRead;
-        while((bytesRead = input.read(buffer)) != -1 && bytesLeft > 0) {
+        while ((bytesRead = input.read(buffer)) != -1 && bytesLeft > 0) {
             buffer.clear();
             output.write(buffer.array(), 0, bytesLeft < bytesRead ? bytesLeft : bytesRead);
             bytesLeft -= bytesRead;
@@ -114,11 +124,40 @@ public class GameController extends BaseController {
     }
 
     @GetMapping({"/list"})
-    public PageResult list(@RequestParam(value = "page",required = false,defaultValue = "1") int page, @RequestParam(value = "pageSize",required = false,defaultValue = "10") int pageSize) {
+    public PageResult list(@RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
         PageResult result = this.gameService.findListByPage(page, pageSize, null);
         return result;
     }
 
 
+    @GetMapping({"/download"})
+    public Result downLoad(@RequestParam Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Game game = gameService.selectByPrimaryKey(id);
+        if (game == null || StringUtil.isEmpty(game.getAppPackage())) {
+            return (new Result()).resultCode(ResultCode.NO_DATA).detail("该游戏不存在");
+        }
+        File file = new File(game.getAppPackage());
+        if (!file.exists()) {
+            return (new Result()).resultCode(ResultCode.NO_DATA).detail("文件不存在");
+        } else {
+            FileUtils.downLoad(file, request, response);
+
+            GameDownloadLog log = new GameDownloadLog();
+            log.setGameId(game.getId());
+
+            Object userId = request.getAttribute(MyAdapterInterceptor.LOGIN_USER_KEY);
+
+            if (userId != null && NumberUtils.isDigits(userId.toString())) {
+                log.setUserId(Long.valueOf(userId.toString()));
+            }
+            log.setDownloadTime(new Date());
+            log.setSource(0);
+            log.setIp(IpUtils.getIpAddr(request));
+
+            gameService.insertDownloadLog(log);
+
+            return this.successResult();
+        }
+    }
 
 }

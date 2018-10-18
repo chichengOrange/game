@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.mapper.game.GameDownloadLogMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.model.game.GameDownloadLog" >
+    <id column="game_id" property="gameId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="download_time" property="downloadTime" jdbcType="TIMESTAMP" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    game_id, user_id, download_time, ip, source
+  </sql>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from game_download_log
+    where game_id = #{gameId,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.cc.model.game.GameDownloadLog" >
+    insert into game_download_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gameId != null" >
+        game_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="downloadTime != null" >
+        download_time,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gameId != null" >
+        #{gameId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="downloadTime != null" >
+        #{downloadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.model.game.GameDownloadLog" >
+    update game_download_log
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="downloadTime != null" >
+        download_time = #{downloadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where game_id = #{gameId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

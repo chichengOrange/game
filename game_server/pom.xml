@@ -84,6 +84,14 @@
             <systemPath>${basedir}/lib/XDocService.jar</systemPath>
         </dependency>
 
+        <dependency>
+            <groupId>com.cck</groupId>
+            <artifactId>ancun</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/ancun-netsign-sdk-all-2.4.0.jar</systemPath>
+        </dependency>
+
         <!--数据库-->
         <!--mysql数据库-->
         <dependency>

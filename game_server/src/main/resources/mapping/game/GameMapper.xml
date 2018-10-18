@@ -33,9 +33,11 @@
 
     <select id="findObjectsBySearch" resultMap="BaseResultMap" parameterType="java.lang.String">
 
-        select  <include refid="Base_Column_List"/>
+        select  <include refid="Base_Column_List"/>,
 
-        from game
+        (select count(*) from game_download_log gl where gl.game_id = g.id) AS downloadCount
+
+        from game g
 
         <if test="search != null">
             where name like concat('%',#{search},'%')

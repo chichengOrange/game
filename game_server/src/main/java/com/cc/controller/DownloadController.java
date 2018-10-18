@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DownloadController extends BaseController {
 
-    @IgnoreToken
     @ApiOperation(value = "文件下载", notes = "path 为文件路径")
     @GetMapping({"/download"})
     public Result downLoad(@RequestParam String path, HttpServletRequest request, HttpServletResponse response) throws IOException {
