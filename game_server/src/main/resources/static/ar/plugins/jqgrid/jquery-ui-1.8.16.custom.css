@@ -22,7 +22,7 @@
 
 .ui-widget-content {
     border: 1px solid #555;
-    background: #000 url("images/ui-bg_loop_25_000000_21x21.png") 50% 50% repeat;
+    background: #444 50% 50%; /*url("images/ui-bg_loop_25_000000_21x21.png") 50% 50% repeat*/
     color: #fff
 }
 
@@ -89,12 +89,12 @@
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
     border: 1px solid #ccc;
     background: #2e7db2 url("images/ui-bg_highlight-soft_80_eeeeee_1x100.png") 50% top repeat-x;
-    color: #2e7db2
+    color: #C5E105
 }
 
 .ui-state-checked {
     border: 1px solid #ccc;
-    background: #eee
+    background: #eee;
 }
 
 .ui-state-highlight a, .ui-widget-content .ui-state-highlight a, .ui-widget-header .ui-state-highlight a {

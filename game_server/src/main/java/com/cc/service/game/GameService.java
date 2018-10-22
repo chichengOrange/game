@@ -17,4 +17,6 @@ public interface GameService extends BaseService<Game, GameMapper> {
 
 
     int insertDownloadLog(GameDownloadLog gameDownloadLog);
+
+    List<Game> findObjectsByType(String type,Integer limit);
 }

@@ -20,7 +20,6 @@ package com.migo.utils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.web.context.ContextLoader;
 
 /**
  * SpringContext 工具类
@@ -29,14 +28,13 @@ import org.springframework.web.context.ContextLoader;
  * @email fei6751803@163.com
  */
 public class SpringContextUtils implements ApplicationContextAware {
-    public static ApplicationContext applicationContext =ContextLoader.getCurrentWebApplicationContext();
+    public static ApplicationContext applicationContext;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         SpringContextUtils.applicationContext = applicationContext;
     }
     public static Object getBean(String name) {
-
         return applicationContext.getBean(name);
     }
 

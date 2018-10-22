@@ -1,24 +1,22 @@
-package com.migo.result;
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
 
+package com.migo.result;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.migo.enums.ResultCode;
 
-/**
- * Created by AAS on 2018/3/20.
- */
 public class Result<T> {
-
     private int code;
-
     private String message;
-
-    @JSONField(serialzeFeatures = SerializerFeature.WriteNullStringAsEmpty)
+    @JSONField(
+            serialzeFeatures = {SerializerFeature.WriteNullStringAsEmpty}
+    )
     private String detail;
-
     private T data;
-
 
     public Result() {
     }
@@ -29,14 +27,12 @@ public class Result<T> {
         this.data = data;
     }
 
-
     public Result fail(int status, String msg, String detail) {
         this.code = status;
         this.message = msg;
         this.detail = detail;
         return this;
     }
-
 
     public Result code(int code) {
         this.code = code;
@@ -59,29 +55,21 @@ public class Result<T> {
         return this;
     }
 
-
     public static Result saveOrUpdate(int r) {
-        if (r == 0) {
-            return new Result(ResultCode.SAVEFAIL, null);
-        } else {
-            return new Result(ResultCode.SUCCESS, null);
-        }
+        return r == 0 ? new Result(ResultCode.SAVEFAIL, (Object)null) : new Result(ResultCode.SUCCESS, (Object)null);
     }
-
 
     public static Result success(Object data) {
         return new Result(ResultCode.SUCCESS, data);
     }
-
 
     public Result data(T data) {
         this.data = data;
         return this;
     }
 
-
     public int getCode() {
-        return code;
+        return this.code;
     }
 
     public void setCode(int code) {
@@ -89,7 +77,7 @@ public class Result<T> {
     }
 
     public T getData() {
-        return data;
+        return this.data;
     }
 
     public void setData(T data) {
@@ -97,7 +85,7 @@ public class Result<T> {
     }
 
     public String getMessage() {
-        return message;
+        return this.message;
     }
 
     public void setMessage(String msg) {
@@ -105,7 +93,7 @@ public class Result<T> {
     }
 
     public String getDetail() {
-        return detail;
+        return this.detail;
     }
 
     public void setDetail(String detail) {

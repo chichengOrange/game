@@ -1,6 +1,6 @@
 /* dark theme */
 body { 
-  background: #282828 url(../images/dark.png);
+  background: #282828; /*url(../images/dark.png);*/
   color: #BBB;}
 
 h2, h6 { 

@@ -18,7 +18,6 @@
 package com.migo.dao;
 
 import com.migo.entity.UserEntity;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * @author 知秋
@@ -26,8 +25,5 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface UserDao extends BaseDao<UserEntity> {
 
-    UserEntity queryByMobile(@Param(value = "mobile") String mobile);
-
-
-    UserEntity queryByUsername(@Param(value = "username") String username);
+        UserEntity queryByMobile(String mobile);
 }

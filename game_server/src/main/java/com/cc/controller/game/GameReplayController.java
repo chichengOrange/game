@@ -1,6 +1,8 @@
 package com.cc.controller.game;
 
+import com.cc.common.Utils.AncunUtil;
 import com.cc.common.Utils.FileUtils;
+import com.cc.common.annotation.IgnoreToken;
 import com.cc.common.enums.ResultCode;
 import com.cc.common.result.PageResult;
 import com.cc.common.result.Result;
@@ -8,6 +10,7 @@ import com.cc.controller.BaseController;
 import com.cc.model.game.GameReplay;
 import com.cc.service.game.GameReplayService;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +44,7 @@ public class GameReplayController extends BaseController {
      * @param search 搜索条件
      * @return
      */
+    @IgnoreToken
     @GetMapping({"/list"})
     public PageResult replayList(@RequestParam(value = "page",required = false,defaultValue = "1") int page,
                                  @RequestParam(value = "pageSize",required = false,defaultValue = "10") int pageSize,
@@ -63,26 +67,31 @@ public class GameReplayController extends BaseController {
     }
 
 
+    @IgnoreToken
     @GetMapping({"/download"})
     public Result download(@RequestParam  Long replayId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         GameReplay replay = gameReplayService.selectByPrimaryKey(replayId);
 
         if (replay.getReplayContractId() != null){
             //去安存下载
-            // TODO: 2018/10/15  
-        }
 
+           String path=  AncunUtil.downloadContract("/usr/local/tomcat/webapps/docs/replay",replay.getReplayContractId(),response,request);
 
-        // TODO: 2018/10/15  
-        //如果安存失败直接在服务器下载
+            if (StringUtil.isEmpty(path)){
+                path = replay.getReplayFile();
+            }
 
-        File file = new File(replay.getReplayFile());
-        if (!file.exists()) {
+            File file = new File(path);
+            if (!file.exists()) {
+                return (new Result()).resultCode(ResultCode.NO_DATA).detail("replay不存在");
+            } else {
+                FileUtils.downLoad(file, request, response);
+                return this.successResult();
+            }
+        }else {
             return (new Result()).resultCode(ResultCode.NO_DATA).detail("replay不存在");
-        } else {
-            FileUtils.downLoad(file, request, response);
-            return this.successResult();
         }
+
     }
 
 }

@@ -21,37 +21,45 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public UserServiceImpl() {
-    }
-
+    @Override
     public UserModel queryObject(Long userId) {
-        return (UserModel)this.userMapper.selectByPrimaryKey(userId);
+        return userMapper.selectByPrimaryKey(userId);
     }
 
-    public void save(UserModel user) {
-        user.setUserId(DateUtils.currentTimeMillis());
-        user.setPassword(MD5Encode.encryption(user.getPassword()));
+    @Override
+    public int save(UserModel user) {
         user.setCreateTime(new Date());
-        this.userMapper.insertSelective(user);
+        return userMapper.insertSelective(user);
     }
 
-    public void update(UserModel user) {
-        this.userMapper.updateByPrimaryKeySelective(user);
+    @Override
+    public int update(UserModel user) {
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 
+
+    @Override
     public UserModel queryByMobile(String mobile) {
-        return this.userMapper.queryByMobile(mobile);
+        return userMapper.queryByMobile(mobile);
     }
 
-    public long login(String username, String password) {
-        UserModel user = this.userMapper.queryByUsername(username);
+    @Override
+    public UserModel login(String username, String password) {
+        UserModel user = userMapper.queryByUsername(username);
         AssertUtil.isNull(user, "账号或密码错误");
+
+
         if (user.getStatus() != null && user.getStatus() == 0) {
             throw new RRException("此账号已被禁用 请联系管理员", 300);
-        } else if (!user.getPassword().equals(password)) {
-            throw new RRException("账号或密码错误", 300);
-        } else {
-            return user.getUserId();
         }
+
+        //密码错误
+        if (!user.getPassword().equals(password)) {
+            throw new RRException("账号或密码错误", 300);
+        }
+
+
+        return user;
     }
+
 }

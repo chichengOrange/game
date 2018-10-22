@@ -4,12 +4,12 @@
 
 
 <head>
-  <link  th:replace="ar/common/css.html"/>
-  <!-- modernizr enables HTML5 elements and feature detects -->
+    <link th:replace="ar/common/css.html"/>
+    <!-- modernizr enables HTML5 elements and feature detects -->
 </head>
 
 <body>
-  <div id="main">
+<div id="main">
 
     <!-- begin header -->
     <header th:replace="ar/common/fragment :: header">
@@ -18,42 +18,73 @@
 
     <!-- begin content -->
     <div id="site_content">
-      <div id="left_content" style="display: none">
-        <h1>login</h1>
-        <p>Say hello, using this contact form.</p>
 
-        <form id="login" action="" method="post">
-          <div class="form_settings">
-            <p><span>username</span><input class="contact" type="text" name="username"  value="" placehoder="password"/></p>
-            <p><span>password</span><input class="contact" type="password" name="password" value="" placehoder="password"/></p>
-           <!-- <p><span>Message</span><textarea class="contact textarea" rows="5" cols="50" name="your_message"></textarea></p>
-            <p style="line-height: 1.7em;">To help prevent spam, please enter the answer to this question:</p>-->
-            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="button"  value="login" /></p>
-          </div>
-        </form>
-      </div>
+        <div class="left_content" id="showLogin" style="display: none">
+            <h1>登录账号</h1>
+            <p>Say hello, using this login form.</p>
 
-
-
-      <div class="left_content">
-        <h1>Contact</h1>
-        <p>Say hello, using this contact form.</p>
-
-        <form id="register" action="" method="post">
-          <div class="form_settings">
-            <p><span>username</span><input class="contact" type="text" name="username"  value="" placehoder="password"/></p>
-            <p><span>password</span><input class="contact" type="password" name="password" value="" placehoder="password"/></p>
-            <!-- <p><span>Message</span><textarea class="contact textarea" rows="5" cols="50" name="your_message"></textarea></p>
-             <p style="line-height: 1.7em;">To help prevent spam, please enter the answer to this question:</p>-->
-            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="button"  value="register" /></p>
-          </div>
-        </form>
-      </div>
+            <form id="loginForm" action="" method="post" name="loginForm">
+                <div class="form_settings">
+                    <p><span>用户名</span><input class="contact" required="required" type="text" name="username" value=""
+                                              placeholder="username"/></p>
+                    <p><span>密码</span><input class="contact" required="required" type="password" name="password"
+                                             value="" placeholder="password"/></p>
+                    <!-- <p><span>Message</span><textarea class="contact textarea" rows="5" cols="50" name="your_message"></textarea></p>
+                     <p style="line-height: 1.7em;">To help prevent spam, please enter the answer to this question:</p>-->
+                    <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="button" value="登录"
+                                                                           onclick="login()"/></p>
+                </div>
+            </form>
+        </div>
 
 
-      <div id="right_content">
-        <img src="images/contact.jpg" width="450" height="450" title="contact" alt="contact" />
-      </div>
+        <div class="left_content" id="register" style="display: none">
+            <h1>新用户</h1>
+            <p>Say hello, using this register form.</p>
+            <form id="registerForm" action="" name="reForm" method="post" onsubmit="return register()">
+                <div class="form_settings">
+                    <p><span>用户名</span><input class="contact" type="text" name="username" value=""
+                                              placeholder="username" required/></p>
+                    <p><span>密码</span><input class="contact" type="password" name="psd" value=""
+                                             placeholder="password" maxlength="15" required/></p>
+                    <p><span>确认密码</span><input class="contact" type="password" name="confirm" value=""
+                                               placeholder="password" required onblur="checkReForm()"/></p>
+                    <p><span>电话</span><input class="contact" type="text" name="mobile" placeholder="mobile"/></p>
+                    <p><span>邮箱</span><input class="contact" type="text" name="email" value="" placeholder="email"/></p>
+
+                    <p><span></span> <label id="reMsg" style="width: 200px;color: red"></label></p>
+
+                    <!-- <p><span>Message</span><textarea class="contact textarea" rows="5" cols="50" name="your_message"></textarea></p>
+                     <p style="line-height: 1.7em;">To help prevent spam, please enter the answer to this question:</p>-->
+                    <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" value="注册"/></p>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="left_content" id="realName" style="display: none">
+            <h1>实名认证</h1>
+            <p>实名认证后可以对VR操作进行存证</p>
+            <form id="realNameForm" action="" name="realNameForm" method="post" onsubmit="">
+                <div class="form_settings">
+                    <p><span>真实姓名</span><input class="contact" type="text" name="username" value=""
+                                              placeholder="username" required/></p>
+                    <p><span>身份证</span><input class="contact" type="text" name="identity" placeholder="identity"/></p>
+                    <p><span>电话</span><input class="contact" type="text" name="mobile" placeholder="mobile"/></p>
+
+                    <p><span></span> <label id="rnMsg" style="width: 200px;color: red"></label></p>
+
+                    <!-- <p><span>Message</span><textarea class="contact textarea" rows="5" cols="50" name="your_message"></textarea></p>
+                     <p style="line-height: 1.7em;">To help prevent spam, please enter the answer to this question:</p>-->
+                    <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" value="认证"/></p>
+                </div>
+            </form>
+        </div>
+
+
+        <div id="right_content">
+            <img src="images/contact.jpg" width="450" height="450" title="contact" alt="contact"/>
+        </div>
     </div>
     <!-- end content -->
 
@@ -62,17 +93,133 @@
 
     </footer>
     <!-- end footer -->
-  </div>
+</div>
 
-  <script th:replace="ar/common/js.html"></script>
+<script th:replace="ar/common/js.html"></script>
+<script type="text/javascript" src="js/jquery.form.js"></script>
+<script type="text/javascript" src="js/md5.js"></script>
 
-  <script th:inline="javascript" >
-      /*<![CDATA[*/
-      $(document).ready(function() {
-          var supple =[[${supple}]];
-          suppleUI(supple);
-      });
-      /*]]>*/
-  </script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+
+    var contextPath = /*[[@{/}]]*/ '';
+
+
+    $(document).ready(function () {
+
+        const supple = [[${supple}]];
+
+        if ([[${param.show}]] == "realName" && supple.user != null){
+
+            document.realNameForm.mobile.value = supple.user.mobile;
+        }
+
+        suppleUI(supple);
+        const sh = [[${param.show}]];
+        document.getElementById(sh).style.display = 'block';
+    });
+
+
+    function register() {
+
+        if (!checkReForm()) {
+            return false;
+        }
+
+
+        var psd = document.reForm.psd.value;
+        psd = hex_md5(psd);
+
+        submit("#registerForm", contextPath + "user/register", {password: psd}, function (data, status) {
+            if (data.code == 200) {
+                window.location.href = "contact?show=showLogin"
+            } else {
+                alert(data.message)
+                //
+            }
+        });
+
+        return false;
+    }
+
+
+    function login() {
+        const lform = document.loginForm;
+        $.ajax({
+            type: "POST",
+            url: contextPath+"ar/login",
+            data: {username:lform.username.value,password: hex_md5(lform.password.value)},
+            async: false,
+            dataType:"json",
+            before:before(),
+            success: function (data) {
+                if (data.code == 200){
+                    //const  user = data.data;
+                    window.location.href = "home"
+                    /*if (user.rnameStatus == null || user.rnameStatus != 1) {
+                        window.location.href = "contact?show=realName"
+                    }else {
+                        window.location.href = "home"
+                    }*/
+                } else {
+                    alert(data.message)
+                }
+            },
+            complete:complete()
+        })
+
+    }
+
+
+    function submit(form, url, data, response) {
+        var options = {
+            target: form,    // 把服务器返回的内容放入id为output的元素中
+            url: url,    //默认是form的action，如果申明，则会覆盖
+            // type : type,    // 默认值是form的method("GET" or "POST")，如果声明，则会覆盖
+            dataType: "json",    // html（默认）、xml、script、json接受服务器端返回的类型
+            data: data,
+            // clearForm : true,    // 成功提交后，清除所有表单元素的值
+            // resetForm : true,    // 成功提交后，重置所有表单元素的值
+            timeout: 3000,    // 限制请求的时间，当请求大于3秒后，跳出请求
+            beforeSubmit: before(),    // 提交前的回调函数
+            success: response,
+            error: error(),
+            complete:before()
+        }
+
+        $(form).ajaxSubmit(options)
+    }
+
+
+    function checkReForm() {
+        const psd = document.reForm.psd.value;
+        const confirm = document.reForm.confirm.value;
+        if (psd.length < 6) {
+            document.getElementById("reMsg").innerHTML = "密码不能少于六位，请重新输入";//
+            return false;
+        } else if (psd != confirm) {
+            document.getElementById("reMsg").innerHTML = "两次输入密码不一致，请重新输入";//
+            return false;
+        } else {
+            document.getElementById("reMsg").innerHTML = "";//
+            return true;
+        }
+    }
+
+    
+    function before() {
+        $("#site_content").mLoading("show");
+    }
+    
+    function complete() {
+        $("#site_content").mLoading("hide");
+    }
+
+    function error() {
+        alert("网络故障")
+    }
+    /*]]>*/
+</script>
 </body>
 </html>

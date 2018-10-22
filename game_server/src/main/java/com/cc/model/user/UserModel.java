@@ -28,4 +28,7 @@ public class UserModel implements Serializable {
     private Integer status;
     private String qrCode;
     private String studentId;
+
+
+
 }

@@ -75,7 +75,6 @@ public class UserRealm  extends AuthorizingRealm{
             }
             permsSet.addAll(Arrays.asList(perms.trim().split(",")));
         }*/
-
         Set<String> permsSet = permsList.stream().parallel()
                                        .filter(StringUtils::isNotBlank)
                                        .map(String::trim)

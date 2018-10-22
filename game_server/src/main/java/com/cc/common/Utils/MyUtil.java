@@ -20,7 +20,7 @@ public class MyUtil {
         response.setHeader("Pragma", "No-cache");
         response.setHeader("Cahce-Control", "no-cache");
         response.setDateHeader("Expires", 0);
-        response.setContentType("text/json; charset=utf-8");
+        response.setContentType("application/json; charset=utf-8");
 
         //options
         response.setHeader("Access-Control-Allow-Methods",

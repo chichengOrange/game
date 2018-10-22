@@ -1,1 +1,34 @@
-, 8ae4e58237a11726013abed5d18a3208 2c908289272d2b8f012732642d160014584141.000000322956.000000Ç$*0_Ç$*0_00000000, 8ae4e58237a11726013abed77a943218 2c90828926ab3e830126f91330770006583222.000000323348.000000Ç$5%Ç$5%00000000, 8ae4e58237a11726013abed7f722321c 2c908289272d2b8f01273264ec8d0018584359.000000322767.000000Ç$87[Ç$87[00000000, 8ae4e58237a11726013abed861593221 2c908289272d2b8f012732642d160014584139.000000322958.000000Ç$;RÇ$;R00000000, 8ae4e58237a11726013abed8e94d3228 2c908289272d2b8f01273266b3e00022583154.000000321224.000000Ç$>KVÇ$>KV00000000, 8ae4e58237a11726013abedaa135323b 2c908289272d2b8f012732668ace0021583157.000000322256.000000Ç$JÇ$J00000000, 8ae4e58237a11726013abedc4e45324f 2c90828926ab3
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
+package com.migo.result;
+
+import com.github.pagehelper.PageInfo;
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class PageResult<T> extends Result {
+    private long totalCount;
+    private int pageSize;
+    private int totalPage;
+    private int currPage;
+
+    public PageResult(List<T> t) {
+        this.setCode(200);
+        this.setMessage("SUCCESS");
+        this.setData(t);
+        PageInfo<T> pageInfo = new PageInfo(t);
+        this.totalCount = pageInfo.getTotal();
+        this.totalPage = pageInfo.getPages();
+        this.currPage = pageInfo.getPageNum();
+        this.pageSize = pageInfo.getPageSize();
+    }
+
+
+
+
+}

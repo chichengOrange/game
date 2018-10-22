@@ -7,6 +7,7 @@ package com.cc.service.user.impl;
 
 import com.cc.mapper.user.TokenMapper;
 import com.cc.model.user.TokenModel;
+import com.cc.service.BaseServiceImpl;
 import com.cc.service.user.TokenService;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,10 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("tokenService")
-public class TokenServiceImpl implements TokenService {
+public class TokenServiceImpl extends BaseServiceImpl<TokenModel,TokenMapper> implements TokenService {
     @Autowired
     private TokenMapper tokenMapper;
-    private static final int EXPIRE = 3600*12;//12小时
+    private static final int EXPIRE = 3600*12*10;//10天
 
     public TokenServiceImpl() {
     }

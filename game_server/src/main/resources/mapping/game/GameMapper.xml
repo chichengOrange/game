@@ -45,6 +45,34 @@
 
     </select>
 
+
+
+    <select id="findObjectsByType" resultMap="BaseResultMap">
+
+        select  <include refid="Base_Column_List"/>,
+
+        (select count(*) from game_download_log gl where gl.game_id = g.id) AS downloadCount
+
+        from game g
+
+        <where>
+            <if test="type != null">
+               g.type  = #{type}
+            </if>
+        </where>
+
+        ORDER BY downloadCount desc
+
+        <if test="limit != null">
+            limit 0 , #{limit}
+        </if>
+
+    </select>
+
+
+
+
+
     <select id="selectAllType" resultType="java.lang.String">
         select  distinct `type`  from game order by type;
     </select>

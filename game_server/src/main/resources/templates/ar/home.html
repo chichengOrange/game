@@ -16,13 +16,31 @@
     <!-- begin content -->
     <div id="site_content">
       <!-- start gallery HTML containers -->
-      <div class="navigation-container">
+
+
+      <div class="content">
+        <div class="slideshow-container">
+          <div id="loading" class="loader"></div>
+          <div id="slideshow" class="slideshow"></div>
+         <div id="controls" class="controls portfolio_two"></div>
+          <div id="caption" class="caption-container"></div>
+        </div>
+      </div>
+
+
+      <div class="navigation-container" style="height: 10px;">
         <div id="thumbs" class="navigation">
+<!--
           <a class="pageLink prev" style="visibility: hidden;" href="#" title="Previous Page"></a>
+-->
+
 
             <ul class="thumbs noscript">
               <li th:each="game : ${model.gameList}">
-                <a class="thumb"  th:href="${game.picture}"><img style="width: 75px;height: 75px" th:src="${game.picture}" alt="one" /></a>
+                <!--<div class="caption" style="margin-top: -180px;width: 50px;height: 160px">
+                  夏夜
+                </div>-->
+                <a class="thumb"  th:href="${game.picture}"><!--<img style="width: 5px;height: 5px"  alt="one" />--></a>
                 <div class="caption portfolio_name_out">
                   <div class="image-title portfolio_name" th:text="${game.name}">&quot;Pier by the sea, Fowey, Cornwall, UK&quot;</div>
                 </div>
@@ -32,17 +50,12 @@
               </li>
             </ul>
 
-          <a class="pageLink next" style="visibility: hidden;" href="#" title="Next Page"></a>
+<!--
+        <a class="pageLink next" style="visibility: hidden;" href="#" title="Next Page"></a>
+-->
         </div>
       </div>
-      <div class="content">
-        <div class="slideshow-container">
-          <div id="loading" class="loader"></div>
-          <div id="slideshow" class="slideshow"></div>
-          <div id="controls" class="controls portfolio_two"></div>
-          <div id="caption" class="caption-container"></div>
-        </div>
-      </div>
+
       <!-- end gallery HTML containers -->
     </div>
     <!-- end content -->
@@ -95,7 +108,7 @@
         controlsContainerSel:      '#controls',
         captionContainerSel:       '#caption',
         loadingContainerSel:       '#loading',
-        renderSSControls:          true,
+        renderSSControls:          false,
         renderNavControls:         true,
         playLinkText:              '播放',
         pauseLinkText:             '暂停',

@@ -33,4 +33,9 @@ public class GameServiceImpl extends BaseServiceImpl<Game, GameMapper> implement
     public int insertDownloadLog(GameDownloadLog gameDownloadLog){
        return gameDownloadLogMapper.insertSelective(gameDownloadLog);
     }
+
+    @Override
+    public List<Game> findObjectsByType(String type, Integer limit) {
+        return gameMapper.findObjectsByType(type,limit);
+    }
 }

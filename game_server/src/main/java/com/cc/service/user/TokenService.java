@@ -5,10 +5,13 @@
 
 package com.cc.service.user;
 
+import com.cc.mapper.user.TokenMapper;
 import com.cc.model.user.TokenModel;
+import com.cc.service.BaseService;
+
 import java.util.Map;
 
-public interface TokenService {
+public interface TokenService extends BaseService<TokenModel,TokenMapper> {
     TokenModel queryByUserId(Long userId);
 
     TokenModel queryByToken(String token);

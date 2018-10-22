@@ -22,12 +22,16 @@
 
   <select id="findObjectsBySearch" resultMap="BaseResultMap" parameterType="java.lang.String">
 
-    select  <include refid="Base_Column_List"/>
+    select  re.* ,g.name gameName,u.username userName
 
-    from game_replay
+    from game_replay re left join game g on re.game_id = g.id left join tb_user u on re.user_id = u.user_id
 
     <if test="search != null">
       where replay_content like concat('%',#{search},'%')
+      or g.name like concat('%',#{search},'%')
+      or g.title like concat('%',#{search},'%')
+      or g.description like concat('%',#{search},'%')
+      or u.username like like concat('%',#{search},'%')
     </if>
 
   </select>

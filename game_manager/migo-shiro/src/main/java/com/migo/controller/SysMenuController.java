@@ -161,7 +161,6 @@ public class SysMenuController extends AbstractController{
      */
     @RequestMapping("/user")
     public R user(){
-
         List<SysMenuEntity> menuList = sysMenuService.getUserMenuList(getUserId());
 
         return R.ok().put("menuList", menuList);

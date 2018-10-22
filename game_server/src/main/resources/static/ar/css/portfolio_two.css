@@ -7,10 +7,11 @@ div.content a, div.navigation a {
   
 div.controls {
   position: absolute;
-  bottom: 0;
-  height: 65px;
+  bottom: 0px;
+  height: 100px;
   padding: 25px 0 0 0;
-  background: url(../images/image_transparent.png);
+  background: #333;
+  /*background: url(../images/image_transparent.png);*/
   width: 100%;}
   
 div.controls a {
@@ -36,7 +37,7 @@ div.slideshow-container {
   position: relative;
   clear: both;
   float: left;
-  height: 453px;}
+  height: 553px;}
 
 div.slideshow-container img {
   float: left;}
@@ -79,12 +80,12 @@ span.image-caption {
 
 div.caption {
   padding: 10px 0;
-  width: 500px;
+  width: 800px;
 
 }
   
 div.image-title {
-  font: normal 130% arial, sans-serif;}
+  font: normal 110% arial, sans-serif;}
   
 div.navigation-container {
   float: left;
@@ -145,10 +146,10 @@ div.gallery-gutter {
 
 
 a.advance-link img{
-  max-height: 450px;
-  min-height: 400px;
-  min-width: 600px;
-  max-height: 950px;
+  //height: 450px;
+  /*min-height: 400px;
+  min-width: 600px;*/
+  width: 950px;
   float: none;
 
 }
@@ -175,5 +176,5 @@ div.portfolio_name_out{
   max-height: 50px;
   padding: 0 0;
   max-width: 160px;
-  background: url("../images/image_transparent.png");
+  /*background: url("../images/image_transparent.png");*/
 }

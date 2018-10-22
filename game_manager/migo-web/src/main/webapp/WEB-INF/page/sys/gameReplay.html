@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>管理员列表</title>
+    #parse("sys/header.html")
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+       
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+</div>
+
+
+<!--模态框 弹出框-->
+<div role="dialog" class="modal fade bs-example-modal-sm" id="layer">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--<div class="modal-header">
+                <span v-model="game.name" class="span"></span>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>-->
+            <div class="modal-body text-center">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <img id="pic" style="max-height: 100%;max-width: 98%"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="${rc.contextPath}/js/sys/gameReplay.js?_${date.systemTime}"></script>
+<script src="${rc.contextPath}/statics/libs/bootstrapvalidator.js"></script>
+
+</body>
+</html>

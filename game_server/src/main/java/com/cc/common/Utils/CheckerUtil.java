@@ -42,11 +42,8 @@ public class CheckerUtil {
             "*@[0-9a-z\\-]+(\\.[0-9a-z\\-]+)+$", Pattern.CASE_INSENSITIVE);
 
 
-    public static final Pattern IDENTIFY_PATTERN = Pattern.compile("^(\\d{6})(\\d{4})(\\d{2})(\\d{2})(\\d{3})([0-9]|X)$" +
-            "*@[0-9a-z\\-]+(\\.[0-9a-z\\-]+)+$", Pattern.CASE_INSENSITIVE);
-
-
-
+    public static final Pattern IDENTITY_PATTERN = Pattern.compile("^(\\d{6})(\\d{4})(\\d{2})(\\d{2})(\\d{3})([0-9]|X)$");
+    public static final Pattern PHONE_PATTERN = Pattern.compile("^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$");
 
 
     /**
@@ -199,6 +196,16 @@ public class CheckerUtil {
     public static boolean isEmail(String email) {
         return isNotEmpty(email) && EMAIL_PATTERN.matcher(email).matches();
     }
+
+    public static boolean isPhone(String phone) {
+        return isNotEmpty(phone) && PHONE_PATTERN.matcher(phone).matches();
+    }
+
+
+    public static boolean isIdentity(String identity) {
+        return isNotEmpty(identity) && IDENTITY_PATTERN.matcher(identity).matches();
+    }
+
 
     /**
      * 是否为身份证格式

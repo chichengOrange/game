@@ -1,29 +1,27 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
 package com.migo.dao;
 
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
-/**
- * Created by AAS on 2018/3/29.
- */
 public interface BaseMapper<T> {
+    int insertSelective(T var1);
 
-    int insertSelective(T t);//选择性插入
+    int insertBatch(List<Object> var1);
 
-    int insertBatch(List<Object> tList);//批量插入
+    int deleteByPrimaryKey(Long var1);
 
-    int deleteByPrimaryKey(Long id);
+    int deleteBatch(Long[] var1);
 
-    int deleteBatch(Long[] userIds);
+    int updateByPrimaryKeySelective(T var1);
 
-    int updateByPrimaryKeySelective(T t);
+    T selectByPrimaryKey(Long var1);
 
-    T selectByPrimaryKey(Long id);//用主键查询
+    List<T> findObjectsBySearch(@Param("search") String var1);
 
-    List<T> findObjectsBySearch(@Param("search") String search);
-
-    List<T> selectAllSelective(T t);
-
-
+    List<T> selectAllSelective(T var1);
 }

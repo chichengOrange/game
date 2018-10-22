@@ -25,9 +25,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
@@ -40,21 +38,19 @@ import java.util.concurrent.Future;
  * @author 知秋
  * @email fei6751803@163.com
  */
-@Component
 public class ScheduleJob extends QuartzJobBean {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
     private ExecutorService service = Executors.newSingleThreadExecutor();
 
-
     @Override
-    protected void executeInternal(JobExecutionContext jobExecutionContext) {
+    protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 
         ScheduleJobEntity scheduleJob = (ScheduleJobEntity) jobExecutionContext.getMergedJobDataMap()
                                                                    .get(ScheduleJobEntity.JOB_PARAM_KEY);
 
         //获取spring bean
-
+        ScheduleJobLogService scheduleJobLogService = (ScheduleJobLogService) SpringContextUtils.getBean("scheduleJobLogService");
 
         //数据库保存执行记录
         ScheduleJobLogEntity log = new ScheduleJobLogEntity();
@@ -94,8 +90,6 @@ public class ScheduleJob extends QuartzJobBean {
             log.setStatus(1);
             log.setError(StringUtils.substring(e.toString(), 0, 2000));
         }finally {
-            //获取spring bean
-            ScheduleJobLogService scheduleJobLogService = (ScheduleJobLogService) SpringContextUtils.getBean("scheduleJobLogService");
             scheduleJobLogService.save(log);
         }
     }

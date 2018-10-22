@@ -54,9 +54,11 @@
   <script type="text/javascript" th:inline="javascript">
 
       /*<![CDATA[*/
+
+      var contextPath = /*[[@{/}]]*/ '';
       $(function () {
           /*var token = [[${param.token}]]*/
-          var userId = [[${session.user.userId}]];
+          const userId = [[${session.user.userId}]];
           if (userId == null){
               /*跳转登陆页面*/
           }
@@ -68,7 +70,7 @@
                   { label: 'gameName', name: 'gameName',align:'center', width: 50 },
                   {label: 'replayFile', name: 'replayFile', width: 30,align:'center',sortable:false,formatter: function (value,options,data) {
                           return value != null && value !="" ?
-                              '<a style="color:#337ab7;text-decoration: underline darkcyan"  href="download?path='+value+'" download="" ">下载</a>' :
+                              '<a style="color:#337ab7;text-decoration: underline darkcyan"  onclick="downReplay('+data.gameId+')">下载</a>' :
                               '<span style="color: red">暂无记录</span>';
                       }
                    },
@@ -102,7 +104,13 @@
           });
       });
 
+      function downReplay(gameId) {
+
+          window.open(contextPath+"gameReplay/download?replayId="+gameId)
+      }
+
       /*]]>*/
+
 
   </script>
 

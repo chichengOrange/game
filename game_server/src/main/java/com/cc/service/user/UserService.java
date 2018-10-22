@@ -8,13 +8,15 @@ package com.cc.service.user;
 import com.cc.model.user.UserModel;
 
 public interface UserService {
+
+
     UserModel queryObject(Long userId);
 
-    void save(UserModel user);
+    int save(UserModel user);
 
-    void update(UserModel user);
+    int update(UserModel user);
 
     UserModel queryByMobile(String mobile);
 
-    long login(String username, String password);
+    UserModel login(String username, String password);
 }
