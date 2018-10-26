@@ -7,15 +7,11 @@ import com.cc.common.Utils.YmlUtil;
  * @date 2018/8/1 17:37
  **/
 public class YmlDefine {
-    /**
-     * 数据文件地址
-     */
-    public static final String dataFilePath = YmlUtil.getConfigByKey("dataFilePath");
 
     /**
-     * jwt地址
+     * baseFilePath
      */
-    public static final String wjtFilePath = YmlUtil.getConfigByKey("wjtFilePath");
+    public static final String baseFilePath = YmlUtil.getConfigByKey("baseFilePath");
 
 
     /**

@@ -22,7 +22,7 @@ import java.util.Set;
 public class FileUtils {
 
 
-    public static final String FILEPATH = YmlDefine.wjtFilePath;
+    public static final String FILEPATH = YmlDefine.baseFilePath;
 
     // json写入文件
     public synchronized static void write2File(Object json, String fileName) {
@@ -138,24 +138,37 @@ public class FileUtils {
     }
 
 
-
-
     public static void uploadFile(MultipartFile file, File saveFile, MessageDigest digest) throws IOException {
+        if (!saveFile.getParentFile().exists()) {
+            saveFile.getParentFile().mkdirs();
+        }
         InputStream in = file.getInputStream();
         FileOutputStream fos = new FileOutputStream(saveFile);
         BufferedOutputStream out = new BufferedOutputStream(fos);
         byte[] buffer = new byte[4096];
 
         int b;
-        while((b = in.read(buffer)) != -1) {
-            digest.update(buffer, 0, b);
-            out.write(buffer, 0, b);
+
+        if (digest == null) {
+            while ((b = in.read(buffer)) != -1) {
+                out.write(buffer, 0, b);
+            }
+        } else {
+            while ((b = in.read(buffer)) != -1) {
+                digest.update(buffer, 0, b);
+                out.write(buffer, 0, b);
+            }
         }
+
 
         out.flush();
         out.close();
         fos.close();
         in.close();
+    }
+
+    public static void uploadFile(MultipartFile file, File saveFile) throws IOException {
+        uploadFile(file, saveFile, null);
     }
 
     public static byte[] byteByFile(String filePath) {
@@ -168,7 +181,7 @@ public class FileUtils {
             byte[] b = new byte[1024];
 
             int n;
-            while((n = fis.read(b)) != -1) {
+            while ((n = fis.read(b)) != -1) {
                 bos.write(b, 0, n);
             }
 
@@ -207,9 +220,9 @@ public class FileUtils {
         byte[] b = new byte[2048];
         long l = 0L;
 
-        while(l < file.length()) {
+        while (l < file.length()) {
             int j = buff.read(b, 0, 2048);
-            l += (long)j;
+            l += (long) j;
             out.write(b, 0, j);
         }
 

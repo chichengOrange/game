@@ -9,11 +9,19 @@ $(function () {
             { label: '邮箱', name: 'email', width: 100 },
 			{ label: '状态', name: 'status', align:'center', width: 40, formatter: function(value, options, row){
 				var r = value === 0 ?
-                    '<span class="label label-danger" onclick="changeStatus(1,'+row.userId+')">禁用</span> ' :
-                    '<span class="label label-success" onclick="changeStatus(0,'+row.userId+')">正常</span>' ;
+                    '<span class="label label-danger">禁用</span> ' :
+                    '<span class="label label-success">正常</span>' ;
 				return r;
 			}},
-			{ label: '创建时间', name: 'createTime', index: "create_time", width: 80}
+			{ label: '创建时间', name: 'createTime', index: "create_time", width: 80},
+            {
+                label: '操作', name: 'status', width: 40, formatter: function (value,options,row) {
+                    var r = value === 0 ?
+                        '<span class="btn-sm btn-primary" onclick="changeStatus(1,'+row.userId+')">恢复用户</span> ' :
+                        '<span class="btn-sm btn-primary" onclick="changeStatus(0,'+row.userId+')">禁用用户</span>' ;
+                    return r;
+                }
+            }
         ],
 		viewrecords: true,
         height: 385,
@@ -60,7 +68,7 @@ var vm = new Vue({
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{
-                postData:{'search': vm.q.username},
+                postData:{'search': vm.q.search},
                 page:page
             }).trigger("reloadGrid");
 		}

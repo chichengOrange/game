@@ -20,18 +20,9 @@ function suppleUI(object) {
             "<li><a href='contact?show=register'>注册</a></li> " +
             "</ul> " +
             "</li>";
-
-
     } else {
 
-        contact = "<li id='contact'><a href='#'>" + sessionUser.username + "</a> " +
-            "<ul> " +
-            "<li><a href='gameReplay'>记录</a></li> " +
-            "<li><a href='logout'>注销</a></li> " +
-            "</ul> " +
-            "</li>";
-
-       /* if (sessionUser.rnameStatus == null || sessionUser.rnameStatus != 1) {
+       if (sessionUser.rnameStatus == null || sessionUser.rnameStatus != 1) {
             contact = "<li id='contact'><a href='#'>" + sessionUser.username + "</a> " +
                 "<ul> " +
                 "<li><a href='contact?show=realName'>实名认证</a></li> " +
@@ -46,7 +37,7 @@ function suppleUI(object) {
                 "<li><a href='logout'>注销</a></li> " +
                 "</ul> " +
                 "</li>";
-        }*/
+        }
 
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 public class PageResult<T> extends Result {
-    long totalCount;
+    int totalCount;
     int totalPage;
     int pageSize;
     int currentPage;
@@ -22,7 +22,7 @@ public class PageResult<T> extends Result {
         this.setMessage("SUCCESS");
         this.setData(t);
         PageInfo<T> pageInfo = new PageInfo(t);
-        this.totalCount = pageInfo.getTotal();
+        this.totalCount = Integer.valueOf(String.valueOf(pageInfo.getTotal()));
         this.totalPage = pageInfo.getPages();
         this.currentPage = pageInfo.getPageNum();
         this.pageSize = pageInfo.getPageSize();

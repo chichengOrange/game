@@ -57,6 +57,12 @@ public class Formatter {
      */
     public static final SimpleDateFormat DATE_WITH_TIME = new SimpleDateFormat("yyyyMMddHHmmss");
 
+
+    /**
+     * yyyyMMddHHmmss格式
+     */
+    public static final SimpleDateFormat DATE_DAY = new SimpleDateFormat("yyyyMMdd");
+
     /**
      * yyyy-MM-dd HH:mm:ss格式
      */

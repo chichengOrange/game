@@ -149,8 +149,8 @@ footer {
   font: 160% 'News Cycle', arial, sans-serif;
   text-align: right;}
 
-footer p { 
-  padding: 0 0 10px 0;}
+footer p {
+  padding-top: 10px;}
 
 footer a, footer a:hover {
   text-decoration: none;}

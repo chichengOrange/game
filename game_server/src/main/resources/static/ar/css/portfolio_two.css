@@ -1,180 +1,234 @@
 div.content {
-  display: none;
-  clear: both;}
+    display: none;
+    clear: both;
+}
 
 div.content a, div.navigation a {
-  text-decoration: none;}
-  
+    text-decoration: none;
+}
+
 div.controls {
-  position: absolute;
-  bottom: 0px;
-  height: 100px;
-  padding: 25px 0 0 0;
-  background: #333;
-  /*background: url(../images/image_transparent.png);*/
-  width: 100%;}
-  
+    position: absolute;
+    bottom: 260px;
+    height: 30px;
+    width: 100%;
+}
+
 div.controls a {
-  padding: 5px 20px 0 0;
-  float: left;}
-  
+    height: 30px;
+    text-align: center;
+    padding: 20px 10px;
+    background: #707070;
+    font-size: 38px;
+    border: 1px solid #707070;
+    border-radius: 5px;
+}
+
+div.controls .prev {
+    margin-left: 10px;
+}
+
+div.controls .next {
+    margin-left: 865px;
+}
+
 div.ss-controls {
-  float: right;
-  height: 30px;}
+    float: right;
+    height: 30px;
+}
 
 div.nav-controls {
-  float: right;
-  clear: right;}
+    width: 950px;
+
+    /*float: right;
+    clear: right;}*/
+}
 
 div.slideshow-container, div.loader, div.slideshow a.advance-link {
-  width: 950px; /* This should be set to be at least the width of the largest image in the slideshow with padding */
-  line-height: 0;}
+    width: 950px; /* This should be set to be at least the width of the largest image in the slideshow with padding */
+    line-height: 0;
+}
 
 div.loader, div.slideshow a.advance-link, div.caption-container {
-  height: 450px; /* This should be set to be at least the height of the largest image in the slideshow with padding */ }
+    height: 450px; /* This should be set to be at least the height of the largest image in the slideshow with padding */
+}
 
 div.slideshow-container {
-  position: relative;
-  clear: both;
-  float: left;
-  height: 553px;}
+    position: relative;
+    clear: both;
+    float: left;
+    height: 553px;
+}
 
 div.slideshow-container img {
-  float: left;}
-  
+    float: left;
+}
+
 div.loader {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: url(loader.gif) no-repeat center;}
-  
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url(loader.gif) no-repeat center;
+}
+
 div.slideshow span.image-wrapper {
-  position: absolute;
-  top: 3px;
-  left: 0;}
-  
+    position: absolute;
+    top: 3px;
+    left: 0;
+}
+
 div.slideshow a.advance-link {
-  display: table-cell;
-  vertical-align: middle;
-  line-height: 0; /*!* This should be set to be at least the height of the largest image in the slideshow with padding *!*/
-  text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    line-height: 0; /*!* This should be set to be at least the height of the largest image in the slideshow with padding *!*/
+    text-align: center;
 }
 
 div.slideshow a.advance-link:hover, div.slideshow a.advance-link:active, div.slideshow a.advance-link:visited {
-  text-decoration: none;}
-  
+    text-decoration: none;
+}
+
 div.slideshow a.advance-link:focus {
-  outline: none;}
+    outline: none;
+}
 
 div.caption-container {
-  float: left;}
-  
+    float: left;
+}
+
 span.image-caption {
-  display: block;
-  position: absolute;
-  height: 125px;
-  left: 20px;
-  width: 500px;
-  bottom: 0px;
+    display: block;
+    position: absolute;
+    height: 125px;
+    padding-left: 20px;
+    width: 950px;
+    background: #191919;
+    /*background: url(../images/image_transparent.png);*/
+    bottom: 0px;
 }
 
 div.caption {
-  padding: 10px 0;
-  width: 800px;
-
+    padding: 10px 0;
+    width: 800px;
 }
-  
+
 div.image-title {
-  font: normal 110% arial, sans-serif;}
-  
+    font: normal 110% arial, sans-serif;
+}
+
 div.navigation-container {
-  float: left;
-  position: relative;
-  left: 50%;}
-  
+    float: left;
+    position: relative;
+    left: 50%;
+    height: 30px;
+}
+
 div.navigation {
-  float: left;
-  position: relative;
-  left: -50%;}
-  
+    float: left;
+    position: relative;
+    left: -50%;
+}
+
+#thumbs {
+   padding-top: 10px;
+}
+
 div.navigation a.pageLink {
-  height: 77px;
-  line-height: 77px;
-  display: block;
-  position: relative;
-  float: left;
-  margin: 2px;
-  width: 16px;
-  background-position: center center;
-  background-repeat: no-repeat;}
-  
+    height: 77px;
+    line-height: 77px;
+    display: block;
+    position: relative;
+    float: left;
+    margin: 2px;
+    width: 16px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+
+
 div.navigation a.pageLink:focus {
-  outline: none;}
+    outline: none;
+}
 
 div.navigation a.prev {
-  margin-right: 10px;}
-  
+    margin-right: 10px;
+}
+
 div.navigation a.next {
-  margin-left: 10px;}
+    margin-left: 10px;
+}
 
 ul.thumbs {
-  position: relative;
-  float: left;
-  margin: 2px 0 0 0;
-  padding: 0;}
-  
+    position: relative;
+    float: left;
+    margin: 2px 0 0 0;
+    padding: 0;
+}
+
 ul.thumbs li {
-  float: left;
-  padding: 0;
-  margin: 2px;
-  list-style: none;}
-  
+    float: left;
+    width: 16px;
+    padding: 0;
+    margin: 2px;
+    list-style: none;
+    border: 1px solid;
+    border-radius: 3px;
+
+}
+
+ul.thumbs li.selected  a.thumb{
+    background: #C5E105;
+}
+
 a.thumb {
-  display: block;
-  padding: 2px;}
-  
+    display: block;
+    padding: 2px;
+}
+
 a.thumb:focus {
-  outline: none;}
-  
+    outline: none;
+}
+
 ul.thumbs img {
-  display: block;}
-  
+    display: block;
+}
+
 div.gallery-gutter {
-  clear: both;
-  padding-bottom: 20px;}
+    clear: both;
+    padding-bottom: 20px;
+}
 
-
-
-a.advance-link img{
-  //height: 450px;
-  /*min-height: 400px;
-  min-width: 600px;*/
-  width: 950px;
-  float: none;
+a.advance-link img {
+    max-height: 550px;
+    /*min-height: 400px;
+    min-width: 600px;*/
+    width: 950px;
+    float: none;
 
 }
 
 .portfolio_desc {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 div.portfolio_name {
-  max-width: 160px;
-  font-size: 30px;
-  font-family: STXingkai;
-  color: #C5E105;
-  overflow: hidden; /*自动隐藏文字*/
-  text-overflow: ellipsis;/*文字隐藏后添加省略号*/
-  white-space: nowrap;/*强制不换行*/
+    max-width: 160px;
+    font-size: 30px;
+    font-family: STXingkai;
+    color: #C5E105;
+    overflow: hidden; /*自动隐藏文字*/
+    text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+    white-space: nowrap; /*强制不换行*/
 }
 
-div.portfolio_name_out{
-  max-height: 50px;
-  padding: 0 0;
-  max-width: 160px;
-  /*background: url("../images/image_transparent.png");*/
+div.portfolio_name_out {
+    max-height: 50px;
+    padding: 0 0;
+    max-width: 160px;
+    /*background: url("../images/image_transparent.png");*/
 }

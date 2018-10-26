@@ -3,16 +3,35 @@ $(function () {
         url: 'http://47.99.61.151:9002/app/gameReplay/list',
         datatype: "json",
         colModel: [
-            
+
             {label: '课件名称', name: 'gameName', width: 75},
-			{label: '考试人', name: 'userName', width: 60},
-            {label: '记录文件', name: 'replayFile', width: 30,align:'center',sortable:false,formatter: function (value,options,data) {
-                  return value != null && value !="" ?
-                              '<a style="color:#337ab7;text-decoration: underline darkcyan"  onclick="downReplay('+data.gameId+')">下载</a>' :
-                              '<span style="color: red">暂无记录</span>';
-                  }
-             },
-             { label: '记录内容', name: 'replayContent',align:'center', width: 130 ,sortable:false}
+            {label: '考试人', name: 'userName', width: 60},
+            {
+                label: '记录文件',
+                name: 'replayFile',
+                width: 30,
+                align: 'center',
+                sortable: false,
+                formatter: function (value, options, data) {
+                    return value != null && value != "" ?
+                        '<a style="color:#337ab7;text-decoration: underline darkcyan"  onclick="downReplay(\'' + value + '\')">下载记录</a>' :
+                        '<span style="color: red">暂无记录</span>';
+                }
+            },
+            {
+                label: 'visaFile',
+                name: 'visaFile',
+                width: 30,
+                align: 'center',
+                sortable: false,
+                formatter: function (value, options, data) {
+                    return value != null && value != "" ?
+                        '<a style="color:#337ab7;text-decoration: underline darkcyan"  onclick="downloadVisaFile(' + data.id + ')">下载</a>' :
+                        '<span style="color: red">暂无visa</span>';
+                }
+            },
+            {label: '记录内容', name: 'replayContent', align: 'center', width: 130, sortable: false},
+            {label: 'createTime', name: 'createTime', index: 'create_time', align: 'center', width: 100}
 
         ],
         viewrecords: true,
@@ -75,11 +94,14 @@ var vm = new Vue({
 });
 
 
-function downReplay(gameId) {
+function downReplay(path) {
 
-          window.open("http://47.99.61.151:9002/app/gameReplay/download?replayId="+gameId)
- }
+    window.open("http://47.99.61.151:9002/app/download?path=" + path)
+}
 
+function downloadVisaFile(replayId) {
 
+    window.open("http://47.99.61.151:9002/app/gameReplay/download?replayId=" + replayId)
+}
 
 

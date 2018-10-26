@@ -9,4 +9,6 @@ import com.migo.dao.GameDao;
 import com.migo.entity.Game;
 
 public interface GameService extends BaseService<Game, GameDao> {
+
+    int deleteBatch(Object[] id);
 }

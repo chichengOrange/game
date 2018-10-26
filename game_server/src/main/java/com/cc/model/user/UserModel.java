@@ -30,5 +30,10 @@ public class UserModel implements Serializable {
     private String studentId;
 
 
+    private String identity;
+
+    private String realname;
+
+    private Integer rnameStatus;
 
 }

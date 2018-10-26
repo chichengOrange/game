@@ -67,14 +67,21 @@
               url: contextPath+'gameReplay/list?userId='+userId,
               datatype: "json",
               colModel: [
-                  { label: 'gameName', name: 'gameName',align:'center', width: 50 },
+                  { label: 'gameName', name: 'gameName',index:'gameName',align:'center', width: 50 },
                   {label: 'replayFile', name: 'replayFile', width: 30,align:'center',sortable:false,formatter: function (value,options,data) {
                           return value != null && value !="" ?
-                              '<a style="color:#337ab7;text-decoration: underline darkcyan"  onclick="downReplay('+data.gameId+')">下载</a>' :
+                              '<a style="color:#337ab7;text-decoration: underline darkcyan"  onclick="downReplay(\''+value+'\')">下载记录</a>' :
                               '<span style="color: red">暂无记录</span>';
                       }
-                   },
-                  { label: 'replayContent', name: 'replayContent',align:'center', width: 100 ,sortable:false}
+                  },
+                  {label: 'visaFile', name: 'visaFile', width: 30,align:'center',sortable:false,formatter: function (value,options,data) {
+                          return value != null && value !="" ?
+                              '<a style="color:#337ab7;text-decoration: underline darkcyan"  onclick="downloadVisaFile('+data.id+')">下载</a>' :
+                              '<span style="color: red">暂无visa</span>';
+                      }
+                  },
+                  { label: 'replayContent', name: 'replayContent',align:'center', width: 100 ,sortable:false},
+                  { label: 'createTime', name: 'createTime',index:'create_time',align:'center', width: 100}
               ],
               viewrecords: true,
               height: 385,
@@ -104,9 +111,13 @@
           });
       });
 
-      function downReplay(gameId) {
+      function downReplay(path) {
+          window.open(contextPath+"download?path="+path)
+      }
 
-          window.open(contextPath+"gameReplay/download?replayId="+gameId)
+      function downloadVisaFile(replayId) {
+
+          window.open(contextPath+"gameReplay/download?replayId="+replayId)
       }
 
       /*]]>*/

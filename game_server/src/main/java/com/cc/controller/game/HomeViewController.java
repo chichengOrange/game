@@ -1,7 +1,10 @@
 package com.cc.controller.game;
 
+import com.ancun.netsign.model.NetSignResponse;
+import com.cc.common.Utils.AncunUtil;
 import com.cc.common.annotation.IgnoreToken;
 import com.cc.common.enums.ResultCode;
+import com.cc.common.interceptor.MyAdapterInterceptor;
 import com.cc.common.result.PageResult;
 import com.cc.common.result.Result;
 import com.cc.controller.BaseController;
@@ -32,7 +35,7 @@ public class HomeViewController extends BaseController {
     private UserService userService;
 
     private final String HOME = "home";
-   /* private final String CATEGORY = "category";*/
+    /* private final String CATEGORY = "category";*/
     private final String SHOW = "show";
     private final String ABOUT = "about";
     private final String CONTACT = "contact";
@@ -56,7 +59,7 @@ public class HomeViewController extends BaseController {
         UserModel userModel = new UserModel();
         userModel.setUserId(1L);
         userModel.setUsername("zzzzz");
-       //request.getSession().setAttribute("user", userModel);
+        //request.getSession().setAttribute("user", userModel);
 
 
         Object sessionUser = request.getSession().getAttribute("user");
@@ -64,10 +67,10 @@ public class HomeViewController extends BaseController {
         switch (page) {
             case HOME: {
                 Integer limit = null;
-                if (StringUtil.isEmpty(request.getParameter("type"))){
+                if (StringUtil.isEmpty(request.getParameter("type"))) {
                     limit = 10;
                 }
-                List<Game> gameList = gameService.findObjectsByType(request.getParameter("type"),limit);
+                List<Game> gameList = gameService.findObjectsByType(request.getParameter("type"), limit);
                 model.addAttribute("gameList", gameList);
             }
             break;
@@ -82,14 +85,18 @@ public class HomeViewController extends BaseController {
             case CONTACT: {
                 String show = request.getParameter("show");
 
-                if ((StringUtil.isEmpty(show) || show.equals("realNme")) && sessionUser == null){
+                if (StringUtil.isEmpty(show)) {
+                    request.getRequestDispatcher("home").forward(request, response);
+                } else if (show.equals("realName") && sessionUser == null) {
+                    request.getRequestDispatcher("home").forward(request, response);
+                }else if((show.equals("showLogin") || show.equals("register"))&& sessionUser != null){
                     request.getRequestDispatcher("home").forward(request, response);
                 }
 
             }
             break;
             case GAMEREPLAY: {
-                if(sessionUser == null){
+                if (sessionUser == null) {
                     request.getRequestDispatcher("home").forward(request, response);
                 }
             }
@@ -136,13 +143,13 @@ public class HomeViewController extends BaseController {
         UserModel user = userService.login(username, password);
 
 
-        request.getSession().setAttribute("user",user);
+        request.getSession().setAttribute("user", user);
 
+
+        request.getSession().setMaxInactiveInterval(24*3600);//一天
 
         return successResult(user);
     }
-
-
 
 
 }

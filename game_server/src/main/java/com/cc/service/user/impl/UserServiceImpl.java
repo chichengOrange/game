@@ -6,18 +6,18 @@
 package com.cc.service.user.impl;
 
 import com.cc.common.Utils.AssertUtil;
-import com.cc.common.Utils.DateUtils;
-import com.cc.common.Utils.MD5Encode;
 import com.cc.common.Utils.RRException;
 import com.cc.mapper.user.UserMapper;
 import com.cc.model.user.UserModel;
+import com.cc.service.BaseServiceImpl;
 import com.cc.service.user.UserService;
-import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service("userService")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<UserModel,UserMapper> implements UserService {
     @Autowired
     private UserMapper userMapper;
 

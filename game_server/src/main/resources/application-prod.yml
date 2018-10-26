@@ -2,7 +2,7 @@
 spring:
    datasource:
         name: test
-        url: jdbc:mysql://47.99.61.151:3336/cc-system?useUnicode=true&characterEncoding=UTF-8
+        url: jdbc:mysql://47.99.61.151:3306/cc-system?useUnicode=true&characterEncoding=UTF-8
         username: root
         password: 123456
         # 使用druid数据源
@@ -66,9 +66,8 @@ pagehelper:
 #自定义属性
 ymlmanager:
   mapProps:
-    wjtFilePath: D:/token/ #token存放地址 暂时不用了
+    baseFilePath: /usr/local/tomcat/webapps/docs/ #文件上传base地址
     aesSecret: se%~!@#$%^**(& #aes加密
-    dataFilePath: /usr/local/imrFiles/  #文件上传地址
     urlPath: /imrFiles/ #用来转换静态文件的url路径 需要改Tomcat的 server.xml
     flag: (&&)  #用户id加密+flag+uuid生成token返回给客户端 flag用来解析加密的id
     docTemPath: static/doc/record.docx   #word文档的模板路径放在静态文件里

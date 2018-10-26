@@ -5,9 +5,11 @@
 
 package com.cc.service.user;
 
+import com.cc.mapper.user.UserMapper;
 import com.cc.model.user.UserModel;
+import com.cc.service.BaseService;
 
-public interface UserService {
+public interface UserService extends BaseService<UserModel, UserMapper> {
 
 
     UserModel queryObject(Long userId);

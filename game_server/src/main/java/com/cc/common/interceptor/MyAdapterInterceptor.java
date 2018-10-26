@@ -14,6 +14,7 @@ import com.cc.model.user.TokenModel;
 import com.cc.model.user.UserModel;
 import com.cc.service.user.TokenService;
 import com.github.pagehelper.util.StringUtil;
+
 import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.net.URLDecoder;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -40,8 +42,6 @@ public class MyAdapterInterceptor implements HandlerInterceptor {
     public static final String LOGIN_USER_KEY = "LOGIN_USER_KEY";
     Logger logger = LoggerFactory.getLogger(MyAdapterInterceptor.class);
 
-    public MyAdapterInterceptor() {
-    }
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String method = request.getMethod();
@@ -51,58 +51,56 @@ public class MyAdapterInterceptor implements HandlerInterceptor {
         }
 
 
-
-            String queryStr = request.getQueryString();
-            String token;
-            if (StringUtil.isNotEmpty(queryStr)) {
-                if (hasDanger(queryStr)) {
-                    request.setAttribute("errorMsgInfo", "非法请求!!");
-                    response.setStatus(403);
-                    return false;
-                }
-
-                token = URLDecoder.decode(queryStr);
-                if (token != null && hasDanger(token)) {
-                    request.setAttribute("errorMsgInfo", "非法请求!!");
-                    response.setStatus(403);
-                    return false;
-                }
+        String queryStr = request.getQueryString();
+        String token;
+        if (StringUtil.isNotEmpty(queryStr)) {
+            if (hasDanger(queryStr)) {
+                request.setAttribute("errorMsgInfo", "非法请求!!");
+                response.setStatus(403);
+                return false;
             }
 
+            token = URLDecoder.decode(queryStr);
+            if (token != null && hasDanger(token)) {
+                request.setAttribute("errorMsgInfo", "非法请求!!");
+                response.setStatus(403);
+                return false;
+            }
+        }
 
-            Object user = request.getSession().getAttribute("user");
-            if(user != null && user instanceof UserModel){
-                request.setAttribute(LOGIN_USER_KEY, ((UserModel) user).getUserId());
+
+        Object user = request.getSession().getAttribute("user");
+        if (user != null && user instanceof UserModel) {
+            request.setAttribute(LOGIN_USER_KEY, ((UserModel) user).getUserId());
+            return true;
+        }
+
+
+        if (handler instanceof HandlerMethod) {
+            Annotation annotation = ((HandlerMethod) handler).getMethodAnnotation(IgnoreToken.class);
+            if (annotation != null) {
                 return true;
-            }
-
-
-
-            if (handler instanceof HandlerMethod) {
-                Annotation annotation = ((HandlerMethod)handler).getMethodAnnotation(IgnoreToken.class);
-                if (annotation != null) {
-                    return true;
-                } else {
-                    token = request.getHeader("token");
-                    if (StringUtils.isBlank(token)) {
-                        token = request.getParameter("token");
-                    }
-
-                    if (StringUtils.isBlank(token)) {
-                        throw new RRException("token不能为空");
-                    } else {
-                        TokenModel tokenModel = this.tokenService.queryByToken(token);
-                        if (tokenModel != null && tokenModel.getExpireTime().getTime() >= System.currentTimeMillis()) {
-                            request.setAttribute(LOGIN_USER_KEY, tokenModel.getUserId());
-                            return true;
-                        } else {
-                            throw new RRException("token失效，请重新登录");
-                        }
-                    }
-                }
             } else {
-                return true;
+                token = request.getHeader("token");
+                if (StringUtils.isBlank(token)) {
+                    token = request.getParameter("token");
+                }
+
+                if (StringUtils.isBlank(token)) {
+                    throw new RRException("token不能为空");
+                } else {
+                    TokenModel tokenModel = this.tokenService.queryByToken(token);
+                    if (tokenModel != null && tokenModel.getExpireTime().getTime() >= System.currentTimeMillis()) {
+                        request.setAttribute(LOGIN_USER_KEY, tokenModel.getUserId());
+                        return true;
+                    } else {
+                        throw new RRException("token失效，请重新登录");
+                    }
+                }
             }
+        } else {
+            return true;
+        }
 
     }
 
@@ -116,7 +114,7 @@ public class MyAdapterInterceptor implements HandlerInterceptor {
         String[] var3 = dangerChar;
         int var4 = dangerChar.length;
 
-        for(int var5 = 0; var5 < var4; ++var5) {
+        for (int var5 = 0; var5 < var4; ++var5) {
             String danger = var3[var5];
             if (queryStr.contains(danger)) {
                 has = true;
@@ -144,8 +142,8 @@ public class MyAdapterInterceptor implements HandlerInterceptor {
                     params.put("Timestamp", timestamp);
 
                     String mySign;
-                    while(pNames.hasMoreElements()) {
-                        mySign = (String)pNames.nextElement();
+                    while (pNames.hasMoreElements()) {
+                        mySign = (String) pNames.nextElement();
                         params.put(mySign, request.getParameter(mySign));
                     }
 

@@ -33,14 +33,16 @@
 
     <select id="findObjectsBySearch" resultMap="BaseResultMap" parameterType="java.lang.String">
 
-        select  <include refid="Base_Column_List"/>
+        select
+        <include refid="Base_Column_List"/>
 
-        from game
+        ,(select  count(*) from game_download_log where game_id= g.id) as downloadCount
+        from game g
 
         <if test="search != null">
             where `name` like concat('%',#{search},'%')
-             or title like concat('%',#{search},'%')
-             or description like concat('%',#{search},'%')
+            or title like concat('%',#{search},'%')
+            or description like concat('%',#{search},'%')
         </if>
 
     </select>
@@ -50,12 +52,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
 
-    <insert id="insertSelective" parameterType="com.migo.entity.Game">
+    <insert id="insertSelective" parameterType="com.migo.entity.Game" useGeneratedKeys="true" keyProperty="id">
         insert into game
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
+            id,
             <if test="name != null">
                 `name`,
             </if>
@@ -100,9 +100,9 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=BIGINT},
-            </if>
+
+            #{id,jdbcType=BIGINT},
+
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
             </if>
@@ -195,5 +195,13 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
+
+
+    <delete id="deleteBatch">
+        delete from game where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper>

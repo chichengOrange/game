@@ -4,6 +4,7 @@ import com.hg.xdoc.XDocService;
 import lombok.Data;
 
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,8 @@ public class GameReplay {
 
     private String replayFile;
 
+    private String visaFile;
+
     private String replayContractId;
 
     private Short contractStatus;
@@ -27,6 +30,8 @@ public class GameReplay {
     private String gameName;
 
     private String userName;
+
+    private Date createTime;
 
     public static void main(String[] args) {
         XDocService xdocService = new XDocService("http://www.xdocin.com", "");

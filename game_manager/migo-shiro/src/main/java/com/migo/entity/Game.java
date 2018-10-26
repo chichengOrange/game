@@ -7,10 +7,15 @@ package com.migo.entity;
 
 import java.util.Date;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.migo.utils.LongToStringSerializer;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 @Data
 public class Game {
+/*
+    @JSONField(serializeUsing = LongToStringSerializer.class)
+*/
     private Long id;
     @NotBlank(message = "name 不能为空")
     private String name;
@@ -33,5 +38,9 @@ public class Game {
     private String set;
     private String picture;
     private String video;
+    /**
+     * 非数据库字段 根据game_download_log 表count得出
+     */
+    private Integer downloadCount;
 
 }

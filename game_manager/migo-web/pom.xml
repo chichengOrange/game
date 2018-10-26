@@ -59,6 +59,7 @@
 
     <build>
 
+        <finalName>AR</finalName>
      <!--   &lt;!&ndash;  <finalName>migo-security</finalName>&ndash;&gt;
 
         <plugins>

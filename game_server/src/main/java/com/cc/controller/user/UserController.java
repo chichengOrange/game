@@ -1,7 +1,11 @@
 package com.cc.controller.user;
 
+import com.ancun.netsign.model.NetSignResponse;
+import com.cc.common.Utils.AncunUtil;
 import com.cc.common.Utils.AssertUtil;
 import com.cc.common.annotation.IgnoreToken;
+import com.cc.common.incCode.IncNoService;
+import com.cc.common.incCode.IncTypeEnum;
 import com.cc.common.interceptor.MyAdapterInterceptor;
 import com.cc.common.result.Result;
 import com.cc.controller.BaseController;
@@ -11,6 +15,7 @@ import com.cc.service.user.UserService;
 import com.github.pagehelper.util.StringUtil;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +32,9 @@ public class UserController extends BaseController {
     private UserService userService;
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private IncNoService incNoService;
 
     /**
      * 登录
@@ -63,6 +71,7 @@ public class UserController extends BaseController {
     /**
      * 注册
      */
+    @Transactional
     @IgnoreToken
     @PostMapping("register")
     public Result register(UserModel user, HttpServletRequest request) {
@@ -80,12 +89,46 @@ public class UserController extends BaseController {
             user.setEmail(null);
         }
 
+
+        user.setUserId(incNoService.nextIdByType(IncTypeEnum.TB_USER_ID));
+
         int r = userService.save(user);
-        if (r > 0) {
-            Map<String, Object> map = tokenService.createToken(user.getUserId());
-            return successResult(map);
+
+        return saveOrUpdateResult(r);
+    }
+
+
+    /**
+     * 实名认证
+     */
+    @PostMapping("realName")
+    public Result realName(@RequestParam("identity") String identity,
+                           @RequestParam("real_name") String realName,
+                           @RequestParam("mobile") String mobile,
+                           String email,
+                           HttpServletRequest request) {
+
+        NetSignResponse netSignResponse = AncunUtil.addUser(realName, identity, mobile, email);
+
+        Long userId = (Long) request.getAttribute(MyAdapterInterceptor.LOGIN_USER_KEY);
+
+        if (netSignResponse.getCode() == 100000 || netSignResponse.getCode() == 100024) {
+            UserModel user = new UserModel();
+            user.setUserId(userId);
+            user.setMobile(mobile);
+            user.setRealname(realName);
+            user.setIdentity(identity);
+            user.setRnameStatus(1);
+            user.setEmail(email);
+            userService.updateByPrimaryKeySelective(user);
+
+            user = userService.queryObject(userId);
+            request.getSession().setAttribute("user", user);
+            return successResult();
+        } else {
+            return failResult().message(netSignResponse.getMsg()).code(netSignResponse.getCode());
         }
-        return failResult();
+
     }
 
 }

@@ -65,13 +65,16 @@
         <div class="left_content" id="realName" style="display: none">
             <h1>实名认证</h1>
             <p>实名认证后可以对VR操作进行存证</p>
-            <form id="realNameForm" action="" name="realNameForm" method="post" onsubmit="">
+            <form id="realNameForm" action="" name="realNameForm" method="post" onsubmit="return realName()">
                 <div class="form_settings">
-                    <p><span>真实姓名</span><input class="contact" type="text" name="username" value=""
-                                              placeholder="username" required/></p>
-                    <p><span>身份证</span><input class="contact" type="text" name="identity" placeholder="identity"/></p>
-                    <p><span>电话</span><input class="contact" type="text" name="mobile" placeholder="mobile"/></p>
-
+                    <p><span>真实姓名</span><input class="contact" type="text" name="real_name" value=""
+                                               placeholder="realName" required/></p>
+                    <p><span>身份证</span><input class="contact" type="text" name="identity" placeholder="identity"
+                                              onblur="checkIdentity(this.value)"/></p>
+                    <p><span>电话</span><input class="contact" type="text" name="mobile" placeholder="mobile"
+                                             onblur="checkMobile(this.value)"/></p>
+                    <p><span>邮箱</span><input class="contact" type="text" name="email" placeholder="email"
+                                             onblur="checkEmail(this.value)"/></p>
                     <p><span></span> <label id="rnMsg" style="width: 200px;color: red"></label></p>
 
                     <!-- <p><span>Message</span><textarea class="contact textarea" rows="5" cols="50" name="your_message"></textarea></p>
@@ -110,8 +113,10 @@
 
         const supple = [[${supple}]];
 
-        if ([[${param.show}]] == "realName" && supple.user != null){
-
+        if ([[${param.show}]] == "realName" && supple.user != null) {
+            document.realNameForm.real_name.value = supple.user.realname;
+            document.realNameForm.identity.value = supple.user.identity;
+            document.realNameForm.email.value = supple.user.email;
             document.realNameForm.mobile.value = supple.user.mobile;
         }
 
@@ -148,47 +153,82 @@
         const lform = document.loginForm;
         $.ajax({
             type: "POST",
-            url: contextPath+"ar/login",
-            data: {username:lform.username.value,password: hex_md5(lform.password.value)},
+            url: contextPath + "ar/login",
+            data: {username: lform.username.value, password: hex_md5(lform.password.value)},
             async: false,
-            dataType:"json",
-            before:before(),
+            dataType: "json",
+            beforeSend: before,
+            error: error,
             success: function (data) {
-                if (data.code == 200){
-                    //const  user = data.data;
-                    window.location.href = "home"
-                    /*if (user.rnameStatus == null || user.rnameStatus != 1) {
+                if (data.code == 200) {
+                    const user = data.data;
+                    if (user.rnameStatus == null || user.rnameStatus != 1) {
                         window.location.href = "contact?show=realName"
-                    }else {
+                    } else {
                         window.location.href = "home"
-                    }*/
+                    }
                 } else {
-                    alert(data.message)
+                    alert(data.detail)
                 }
             },
-            complete:complete()
+            complete: complete
         })
 
     }
 
-
-    function submit(form, url, data, response) {
-        var options = {
-            target: form,    // 把服务器返回的内容放入id为output的元素中
-            url: url,    //默认是form的action，如果申明，则会覆盖
-            // type : type,    // 默认值是form的method("GET" or "POST")，如果声明，则会覆盖
-            dataType: "json",    // html（默认）、xml、script、json接受服务器端返回的类型
-            data: data,
-            // clearForm : true,    // 成功提交后，清除所有表单元素的值
-            // resetForm : true,    // 成功提交后，重置所有表单元素的值
-            timeout: 3000,    // 限制请求的时间，当请求大于3秒后，跳出请求
-            beforeSubmit: before(),    // 提交前的回调函数
-            success: response,
-            error: error(),
-            complete:before()
+    function realName() {
+        const form = document.realNameForm
+        if (!checkIdentity(form.identity.value)) {
+            document.getElementById("rnMsg").innerHTML = "身份证格式错误";//
+            return false;
+        }
+        if (!checkMobile(form.mobile.value)) {
+            document.getElementById("rnMsg").innerHTML = "电话格式错误";//
+            return false;
         }
 
-        $(form).ajaxSubmit(options)
+        submit("#realNameForm", contextPath + "user/realName", {}, function (data, status) {
+            if (data.code == 200) {
+                window.location.href = "home"
+            } else {
+                alert(data.message)
+                //
+            }
+        });
+
+        return false;
+    }
+
+
+    function checkMobile(mobile) {
+        if (/^1[3|4|5|8][0-9]\d{4,8}$/.test(mobile)) {
+            document.getElementById("rnMsg").innerHTML = "";//
+            return true;
+        }
+        document.getElementById("rnMsg").innerHTML = "手机格式错误";//
+        return false;
+    }
+
+
+    function checkIdentity(identity) {
+        const idPatter = new RegExp(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X|x)$/);
+        if (idPatter.test(identity)) {
+            document.getElementById("rnMsg").innerHTML = "";//
+            return true;
+        }
+        document.getElementById("rnMsg").innerHTML = "身份证格式错误";//
+        return false;
+    }
+
+
+    function checkEmail(email) {
+        const emailPa = new RegExp(/[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/);
+        if (emailPa.test(email)) {
+            document.getElementById("rnMsg").innerHTML = "";//
+            return true;
+        }
+        document.getElementById("rnMsg").innerHTML = "邮件格式错误";//
+        return false;
     }
 
 
@@ -207,11 +247,11 @@
         }
     }
 
-    
+
     function before() {
         $("#site_content").mLoading("show");
     }
-    
+
     function complete() {
         $("#site_content").mLoading("hide");
     }
@@ -219,6 +259,27 @@
     function error() {
         alert("网络故障")
     }
+
+
+    function submit(form, url, data, response) {
+        const options = {
+            target: form,    // 把服务器返回的内容放入id为output的元素中
+            url: url,    //默认是form的action，如果申明，则会覆盖
+            // type : type,    // 默认值是form的method("GET" or "POST")，如果声明，则会覆盖
+            dataType: "json",    // html（默认）、xml、script、json接受服务器端返回的类型
+            data: data,
+            // clearForm : true,    // 成功提交后，清除所有表单元素的值
+            // resetForm : true,    // 成功提交后，重置所有表单元素的值
+            timeout: 3000,    // 限制请求的时间，当请求大于3秒后，跳出请求
+            beforeSubmit: before,    // 提交前的回调函数
+            success: response,
+            error: error,
+            complete: complete
+        }
+
+        $(form).ajaxSubmit(options)
+    }
+
     /*]]>*/
 </script>
 </body>

@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cc.mapper.user.UserMapper">
-    <resultMap id="BaseResultMap" type="com.cc.model.user.UserModel">
-        <id column="user_id" property="userId" jdbcType="BIGINT"/>
-        <result column="username" property="username" jdbcType="VARCHAR"/>
-        <result column="password" property="password" jdbcType="VARCHAR"/>
-        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
-        <result column="email" property="email" jdbcType="VARCHAR"/>
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
-        <result column="qr_code" property="qrCode" jdbcType="VARCHAR"/>
-        <result column="student_id" property="studentId" jdbcType="VARCHAR"/>
+    <resultMap id="BaseResultMap" type="com.cc.model.user.UserModel" >
+        <id column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="qr_code" property="qrCode" jdbcType="VARCHAR" />
+        <result column="student_id" property="studentId" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="identity" property="identity" jdbcType="VARCHAR" />
+        <result column="realname" property="realname" jdbcType="VARCHAR" />
+        <result column="rname_status" property="rnameStatus" jdbcType="SMALLINT" />
     </resultMap>
-
-
-    <sql id="Base_Column_List">
-         user_id, username, mobile, email, create_time, qr_code, student_id
-    </sql>
+    <sql id="Base_Column_List" >
+    user_id, username, password, mobile, email, create_time, qr_code, student_id, status,
+    identity, realname, rname_status
+  </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
@@ -39,84 +42,120 @@
     </select>
 
 
-    <insert id="insertSelective" parameterType="com.cc.model.user.UserModel" useGeneratedKeys="true" keyProperty="userId">
+    <insert id="insertSelective" parameterType="com.cc.model.user.UserModel" >
         insert into tb_user
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="userId != null">
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
                 user_id,
             </if>
-            <if test="username != null">
+            <if test="username != null" >
                 username,
             </if>
-            <if test="password != null">
+            <if test="password != null" >
                 password,
             </if>
-            <if test="mobile != null">
+            <if test="mobile != null" >
                 mobile,
             </if>
-            <if test="email != null">
+            <if test="email != null" >
                 email,
             </if>
-            <if test="createTime != null">
+            <if test="createTime != null" >
                 create_time,
             </if>
-            <if test="qrCode != null">
+            <if test="qrCode != null" >
                 qr_code,
             </if>
-            <if test="studentId != null">
+            <if test="studentId != null" >
                 student_id,
             </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="identity != null" >
+                identity,
+            </if>
+            <if test="realname != null" >
+                realname,
+            </if>
+            <if test="rnameStatus != null" >
+                rname_status,
+            </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="userId != null">
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
                 #{userId,jdbcType=BIGINT},
             </if>
-            <if test="username != null">
+            <if test="username != null" >
                 #{username,jdbcType=VARCHAR},
             </if>
-            <if test="password != null">
+            <if test="password != null" >
                 #{password,jdbcType=VARCHAR},
             </if>
-            <if test="mobile != null">
+            <if test="mobile != null" >
                 #{mobile,jdbcType=VARCHAR},
             </if>
-            <if test="email != null">
+            <if test="email != null" >
                 #{email,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null">
+            <if test="createTime != null" >
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="qrCode != null">
+            <if test="qrCode != null" >
                 #{qrCode,jdbcType=VARCHAR},
             </if>
-            <if test="studentId != null">
+            <if test="studentId != null" >
                 #{studentId,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="identity != null" >
+                #{identity,jdbcType=VARCHAR},
+            </if>
+            <if test="realname != null" >
+                #{realname,jdbcType=VARCHAR},
+            </if>
+            <if test="rnameStatus != null" >
+                #{rnameStatus,jdbcType=SMALLINT},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.cc.model.user.UserModel">
+    <update id="updateByPrimaryKeySelective" parameterType="com.cc.model.user.UserModel" >
         update tb_user
-        <set>
-            <if test="username != null">
+        <set >
+            <if test="username != null" >
                 username = #{username,jdbcType=VARCHAR},
             </if>
-            <if test="password != null">
+            <if test="password != null" >
                 password = #{password,jdbcType=VARCHAR},
             </if>
-            <if test="mobile != null">
+            <if test="mobile != null" >
                 mobile = #{mobile,jdbcType=VARCHAR},
             </if>
-            <if test="email != null">
+            <if test="email != null" >
                 email = #{email,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null">
+            <if test="createTime != null" >
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="qrCode != null">
+            <if test="qrCode != null" >
                 qr_code = #{qrCode,jdbcType=VARCHAR},
             </if>
-            <if test="studentId != null">
+            <if test="studentId != null" >
                 student_id = #{studentId,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="identity != null" >
+                identity = #{identity,jdbcType=VARCHAR},
+            </if>
+            <if test="realname != null" >
+                realname = #{realname,jdbcType=VARCHAR},
+            </if>
+            <if test="rnameStatus != null" >
+                rname_status = #{rnameStatus,jdbcType=SMALLINT},
             </if>
         </set>
         where user_id = #{userId,jdbcType=BIGINT}

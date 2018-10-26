@@ -9,8 +9,10 @@ import com.github.pagehelper.PageHelper;
 import com.migo.dao.BaseMapper;
 import com.migo.result.PageResult;
 import com.migo.service.BaseService;
-import java.util.List;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 public abstract class BaseServiceImpl<O, M extends BaseMapper> implements BaseService<O, M> {
     @Autowired
@@ -51,7 +53,7 @@ public abstract class BaseServiceImpl<O, M extends BaseMapper> implements BaseSe
 
     public PageResult findListByPage(int pageNum, int pageSize, String search, String sidx, String order) {
         PageHelper.startPage(pageNum, pageSize);
-        if (sidx != null && order != null) {
+        if (StringUtils.isNotEmpty(sidx) && StringUtils.isNotEmpty(order)) {
             PageHelper.orderBy(sidx + " " + order);
         }
 

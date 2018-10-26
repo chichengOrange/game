@@ -19,6 +19,7 @@ package com.migo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * 文件上传 Entity
@@ -72,5 +73,12 @@ public class SysOssEntity implements Serializable {
      */
     public Date getCreateDate() {
         return createDate;
+    }
+
+
+    public static void main(String[] args) {
+       // System.out.println(UUID.randomUUID().timestamp());
+        System.out.println(UUID.randomUUID().toString().replace("-",""));
+        System.out.println(UUID.randomUUID().toString());
     }
 }

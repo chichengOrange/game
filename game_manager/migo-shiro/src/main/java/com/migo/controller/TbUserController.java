@@ -6,6 +6,7 @@
 package com.migo.controller;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.util.StringUtil;
 import com.migo.annotation.SysLog;
 import com.migo.baseController.BaseController;
 import com.migo.entity.TbUserEntity;
@@ -30,8 +31,13 @@ public class TbUserController extends BaseController {
 
     @RequestMapping({"/list"})
     @RequiresPermissions({"sys:tbUser:list"})
-    public PageResult list(String search) {
-        PageHelper.startPage(1, 10);
+    public PageResult list(@RequestParam(value = "page",required = false,defaultValue = "1") int page,
+                           @RequestParam(value = "pageSize",required = false,defaultValue = "10") int pageSize,
+                           String search, String sidx, String order) {
+        PageHelper.startPage(page, pageSize);
+        if (StringUtil.isNotEmpty(sidx) && StringUtil.isNotEmpty(order)) {
+            PageHelper.orderBy(sidx + " " + order);
+        }
         List<TbUserEntity> list = this.tbUserService.queryList(search);
         return new PageResult(list);
     }

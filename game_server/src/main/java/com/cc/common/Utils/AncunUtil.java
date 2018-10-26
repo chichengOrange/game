@@ -1,20 +1,14 @@
 package com.cc.common.Utils;
 
-import com.alibaba.fastjson.JSON;
 import com.ancun.netsign.client.NetSignClient;
 import com.ancun.netsign.model.*;
-import com.github.pagehelper.util.StringUtil;
-import org.apache.commons.net.util.Base64;
 
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 
 public class AncunUtil {
     private static final String API_KEY = "ee7fd1aac95dacb9c5d8b1928717d010";
@@ -31,23 +25,21 @@ public class AncunUtil {
      * 同步用户接口
      */
 
-    public void addUserTest() {
-        String name = "name";
-        String idNo = "idNo";
-        String mobile = "mobile";
-        String email = "email";
-        Integer type = 2;
+    public static NetSignResponse addUser(String realName,String identity,String mobile,String email) {
 
+        Integer type = 2;
         AddUserRequest addUserRequest = new AddUserRequest();
-        addUserRequest.setName(name);
-        addUserRequest.setIdNo(idNo);
+        addUserRequest.setName(realName);
+        addUserRequest.setIdNo(identity);
         addUserRequest.setMobile(mobile);
         addUserRequest.setEmail(email);
         addUserRequest.setType(type);
         addUserRequest.setIdentifyType(1);
         addUserRequest.setIdentifyMobile(mobile);
 
-        System.out.println(netSignClient.addUser(addUserRequest));
+        NetSignResponse netSignResponse = netSignClient.addUser(addUserRequest);
+
+        return netSignResponse;
     }
 
     /**
@@ -112,7 +104,7 @@ public class AncunUtil {
      * @throws IOException
      */
 
-    public static void downloadTemplateTest() throws IOException {
+   /* public static void downloadTemplateTest() throws IOException {
         String templateIdent = "t001";
         String templateFilePath = "D:\\";
 
@@ -130,83 +122,17 @@ public class AncunUtil {
             output.writeTo(fos);
             System.out.println(downloadResult.getData().getFileName());
         }
-    }
+    }*/
 
     /**
      * 使用模板发起合同接口
      */
 
     public void initiatingContractTest() {
-        String contractName = "contractName";
-        String contractNo = "contractNo";
-        Integer validityTime = 10;
-
-        List<ContractUser> contractUserList = new ArrayList<ContractUser>();
-
-        ContractUser contractUser = new ContractUser();
-        contractUser.setIdNo("ContractUserIdNo");
-        contractUser.setName("contractUserName");
-        contractUser.setSignOrder(0);
-        contractUser.setLocationMode(3);
-
-        List<SignStrategy> signStrategyList = new ArrayList<>();
-        signStrategyList.add(new SignStrategy("templateIdent", "keyWord1"));
-        signStrategyList.add(new SignStrategy("attachName.pdf", "keyWord2"));
-
-        contractUser.setSignStrategyList(signStrategyList);
-        contractUserList.add(contractUser);
-
-        ContractUser contractUser1 = new ContractUser();
-        contractUser1.setIdNo("contractUser1IdNo");
-        contractUser1.setName("contractUser1Name");
-        contractUser1.setLocationMode(3);
-
-        List<SignStrategy> signStrategyList1 = new ArrayList<>();
-        signStrategyList1.add(new SignStrategy("templateIdent", "page1", 100, 100));
-        signStrategyList1.add(new SignStrategy("attachName.pdf", "page2", 100, 100));
-
-        contractUser1.setSignStrategyList(signStrategyList1);
-        contractUserList.add(contractUser1);
-
-        List<ContractAttach> contractAttachList = new ArrayList<>();
-        ContractAttach contractAttach = new ContractAttach();
-        contractAttach.setAttachName("templateIdent");
-        contractAttach.setTemplateIdent("templateIdent");
-        contractAttach.setSequence(1);
-        contractAttachList.add(contractAttach);
-
-        ContractAttach contractAttach2 = new ContractAttach();
-        contractAttach2.setAttachName("attachName.pdf");
-        contractAttach2.setSequence(2);
-        contractAttachList.add(contractAttach2);
-
-        FileDto contractFile = new FileDto();
-        contractFile.setFileName("attachName.pdf");
-        contractFile.setFilePath("E:\\contract\\attachName.pdf");
-
-        InitiatingContractRequest initiatingContractRequest = new InitiatingContractRequest();
-        initiatingContractRequest.setContractNo(contractName + contractNo);
-        initiatingContractRequest.setContractName(contractName);
-        initiatingContractRequest.setValidityTime(validityTime);initiatingContractRequest.setContractUserList(contractUserList);
-        initiatingContractRequest.setContractAttachList(contractAttachList);
-
-        System.out.println(netSignClient.initiatingContract(initiatingContractRequest, contractFile));
-    }
-
-    /**
-     * 使用自定义合同文件发起合同
-     */
-
-    public static void initiatingContractAndFileTest() {
-
-    }
-
-
-    public static void initiatingContractTest2() {
-        String contractFilePath = "D:\\成绩.pdf";
-        String contractName = "ContractNo008";
-        String contractNo = "ContractNo008";
-        Integer validityTime = 10;
+        String contractFilePath = "D:\\爱签接口文档.pdf";
+        String contractName = "ContractNo1000";
+        String contractNo = "Contract1000";
+        Integer validityTime = 365;
         List<ContractUser> contractUserList = new ArrayList();
         ContractUser contractUser = new ContractUser();
         contractUser.setIdNo("411403198710065779");
@@ -218,24 +144,17 @@ public class AncunUtil {
 
 
         List<SignStrategy> signStrategyList = new ArrayList();
-        signStrategyList.add(new SignStrategy(contractName, "排名"));
+        signStrategyList.add(new SignStrategy(contractName, ""));
         contractUser.setSignStrategyList(signStrategyList);
 
         contractUserList.add(contractUser);
 
-
-
         List<ContractAttach> contractAttachList = new ArrayList();
         ContractAttach contractAttach = new ContractAttach();
         contractAttach.setTemplateIdent("t00010");
-        contractAttach.setAttachName(contractName);
+        contractAttach.setAttachName(contractFilePath);
         contractAttach.setSequence(1);
         contractAttachList.add(contractAttach);
-
-
-        FileDto contractFile = new FileDto();
-        contractFile.setFileName("attachName.pdf");
-        contractFile.setFilePath(contractFilePath);
 
         InitiatingContractRequest initiatingContractRequest = new InitiatingContractRequest();
         initiatingContractRequest.setContractNo(contractNo);
@@ -245,7 +164,64 @@ public class AncunUtil {
         initiatingContractRequest.setContractAttachList(contractAttachList);
         initiatingContractRequest.setSignOrder(0);
 
-        System.out.println(netSignClient.initiatingContract(initiatingContractRequest, contractFile));
+        System.out.println(netSignClient.initiatingContract(initiatingContractRequest));
+    }
+
+    /**
+     * 使用自定义合同文件发起合同
+     * @param contractId 合同ID
+     * @param contractName 合同名
+     * @param fileInputStream  文件流
+     * @param realName 真实姓名
+     * @param identity 用户唯一ID （身份证） 必须是实名认证过的
+     */
+    public static NetSignResponse initiatingContractCustomFile(String contractId,String contractName,InputStream fileInputStream,String realName,String identity) {
+
+        Integer validityTime = 365;
+        List<ContractUser> contractUserList = new ArrayList();
+        ContractUser contractUser = new ContractUser();
+        contractUser.setIdNo(identity);
+        contractUser.setName(realName);
+        contractUser.setSignMode(2);
+        contractUser.setLocationMode(2);
+        contractUser.setSignType(3);
+
+
+        List<SignStrategy> signStrategyList = new ArrayList();
+        SignStrategy strategy = new SignStrategy(contractName, "");
+        strategy.setSignX(400);
+        signStrategyList.add(strategy);
+        contractUser.setSignStrategyList(signStrategyList);
+        contractUserList.add(contractUser);
+
+        List<ContractAttach> contractAttachList = new ArrayList();
+        ContractAttach contractAttach = new ContractAttach();
+
+        contractAttach.setAttachName(contractName);
+        contractAttach.setSequence(1);
+
+        contractAttachList.add(contractAttach);
+
+        FileDto contractFile = new FileDto();
+        contractFile.setFileInputStream(fileInputStream);
+        contractFile.setFileName(contractName);
+
+
+        InitiatingContractRequest request = new InitiatingContractRequest();
+
+        request.setContractNo(contractId);
+        request.setContractName(contractName);
+        request.setValidityTime(validityTime);
+        request.setContractUserList(contractUserList);
+        request.setContractAttachList(contractAttachList);
+
+        NetSignResponse response = netSignClient.initiatingContract(request, contractFile);
+
+
+        System.out.println(response);
+
+
+        return response;
     }
     /**
      * 查询合同状态接口
@@ -295,9 +271,7 @@ public class AncunUtil {
      * @throws IOException
      */
 
-    public static String downloadContract(String savePath,String contractNo, HttpServletResponse response, HttpServletRequest request) throws IOException {
-        ServletOutputStream out = response.getOutputStream();
-
+    public static String downloadContract(String savePath,String contractNo) throws IOException {
         NetSignDownloadResponse downloadResult = netSignClient.downloadContract(contractNo);
         if (downloadResult.getCode() == 100000) {
             InputStream is = downloadResult.getData().getObjectContent();
@@ -307,20 +281,28 @@ public class AncunUtil {
             while ((r = is.read(buffer)) > 0) {
                 output.write(buffer, 0, r);
             }
-            FileOutputStream fos = new FileOutputStream(savePath + downloadResult.getData().getFileName());
+            //downloadResult.getData().getFileName()
+            FileOutputStream fos = new FileOutputStream(savePath + contractNo+".pdf");
             output.writeTo(fos);
             is.close();
             fos.flush();
             fos.close();
             output.flush();
             output.close();
-            return savePath + downloadResult.getData().getFileName();
+            return savePath +contractNo+ ".pdf"/*downloadResult.getData().getFileName()*/;
         }
 
         return null;
     }
 
     public static void main(String[] args) throws IOException {
-        AncunUtil.downloadContractTest();
+        File file = new File("D:\\xx.pdf");
+
+        AncunUtil.initiatingContractCustomFile(UUID.randomUUID().toString(),"test.pdf",new FileInputStream(file),"陈成坤","411403198710065779");
+
+
+       // AncunUtil.downloadContract("D:\\","b92f48b9-e5c2-41f1-95e1-860ff3d5f1d4");
+
+
     }
 }

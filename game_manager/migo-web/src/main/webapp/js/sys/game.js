@@ -3,7 +3,7 @@ $(function () {
         url: '../sys/game/list',
         datatype: "json",
         colModel: [
-            {label: '课件ID', name: 'id', hidden: true, index: 'id', width: 45, key: true},
+            {label: '课件ID', name: 'id', /*hidden: true,*/ index: 'id', width: 60, key: true},
             {label: '课件名称', name: 'name', width: 75},
             {label: '课件标题', name: 'title', width: 90},
             {label: '课件描述', name: 'description', width: 100},
@@ -17,18 +17,19 @@ $(function () {
             {
                 label: '视频', name: 'video', width: 30, formatter: function (value) {
                     return value != null ?
-                        '<a href="../download?path='+value+'"  download="" ">下载视频</a>' :
+                        '<a href="../download?path=' + value + '"  download="" ">下载视频</a>' :
                         '<span class="label label-danger">暂无视频</span>';
                 }
             },
             {
                 label: '课件', name: 'appPackage', width: 40, formatter: function (value) {
                     return value != null ?
-                        '<a href="../download?path='+value+'" download="" ">下载程序包</a>' :
+                        '<a href="../download?path=' + value + '" download="" ">下载程序包</a>' :
                         '<span class="label label-danger">暂无程序包</span>';
                 }
             },
             {label: '版本', name: 'version', width: 30},
+            {label: '下载量', name: 'downloadCount', width: 40},
             {label: '创建时间', name: 'createTime', index: "create_time", width: 60},
             {
                 label: '操作', name: 'id', width: 30, formatter: function (value) {
@@ -44,7 +45,7 @@ $(function () {
         rownumbers: true,
         rownumWidth: 25,
         autowidth: true,
-        multiselect: false,
+        multiselect: true,
         pager: "#jqGridPager",
         jsonReader: {
             root: "data",
@@ -108,6 +109,30 @@ var vm = new Vue({
             vm.getGame(id);
             previewPic();
         },*/
+
+
+        del: function () {
+            var gameIds = getSelectedRows();
+            if (gameIds == null) {
+                return;
+            }
+            confirm('确定要删除选中的记录？', function () {
+                $.ajax({
+                    type: "POST",
+                    url: "../sys/game/delete",
+                    data: JSON.stringify(gameIds),
+                    success: function (r) {
+                        if (r.code == 0) {
+                            alert('操作成功', function (index) {
+                                vm.reload();
+                            });
+                        } else {
+                            alert(r.msg);
+                        }
+                    }
+                });
+            });
+        },
         saveOrUpdate: function () {
             var bootstrapValidator = $("#form").data('bootstrapValidator');
             bootstrapValidator.validate();
@@ -194,7 +219,7 @@ var vm = new Vue({
             $.get("../sys/game/info/" + id, function (r) {
                 vm.game = r.data;
                 //展示图片
-                if (r.data.picture != null){
+                if (r.data.picture != null) {
                     previewPic();
                 }
             });

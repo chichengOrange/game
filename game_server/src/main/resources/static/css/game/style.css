@@ -2,17 +2,12 @@
 
 body {
     font: normal 14px/1.6em Microsoft YaHei, simsun, sans-serif;
-    color: #fff;
+    background: black;
     width: 665px;
     margin: 0 auto;
     overflow-x: hidden;
-    /*
-    background-color: #38b9db;
-    */
-    /*
-    height: 371px;
-    */
-    background: url("/app/img/game/bg.jpg") no-repeat;
+    overflow-y: hidden;
+
 }
 
 
@@ -41,10 +36,10 @@ a:hover {
 
 
 .mainer {
-    position: relative;
-    text-align: center;
-    padding-bottom: 20px;
-    max-width: 665px;
+    position: absolute;
+    width: 665px;
+    height: 333px;
+    background: url("/app/img/game/bg.jpg") no-repeat;
 }
 
 
@@ -68,19 +63,17 @@ h3 {
 }
 
 .intro-img {
-    text-align: right;
-    top: 120px;
+    width: 270px;
+    height: 212px;
+    top: 95px;
     right: 40px;
-    left: 50px;
     position: absolute;
 }
 
-.intro-img img {
-    border: 3px solid #2e8890;
-    max-width: 300px;
-    min-width: 200px;
-    max-height: 300px;
-    min-height: 200px;
+.img_kuang {
+    top: 66px;
+    right: 10px;
+    position: absolute;
 }
 
 .intro_text {
@@ -99,24 +92,40 @@ h3 {
     /*padding: 32px 217px 0 0;*/
     margin: 10px 10px 10px 10px;
     font-size: 12px;
+    color: white;
 }
 
 .intro_name {
     margin-left: 45px;
+    /*
     margin-top: 100px;
+    */
     text-align: left;
     width: 230px;
     word-wrap:break-word;
 }
 
 .intro_name h2{
-    font-size: 40px;
-    line-height: 70px;
+    font-size: 24px;
+    line-height: 30px;
+    color: white;
 }
 
 .intro_name p{
-    font-size: 12px;
+    font-size: 18px;
     line-height: 20px;
+    color: #00ffea;
+    width: 200px;
+    margin-top: 90px;
+}
+
+.intro_name label{
+    font-size: 12px;
+    color: white;
+    line-height: 20px;
+    width: 230px;
+    margin-top: 30px;
+    display: block;
 }
 
 

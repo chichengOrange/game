@@ -15,4 +15,9 @@ import org.springframework.stereotype.Service;
 public class GameServiceImpl extends BaseServiceImpl<Game, GameDao> implements GameService {
     @Autowired
     private GameDao gameDao;
+
+    @Override
+    public int deleteBatch(Object[] ids) {
+        return gameDao.deleteBatch(ids);
+    }
 }

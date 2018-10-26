@@ -20,6 +20,8 @@ public class TbUserEntity implements Serializable {
     @NotBlank(message = "邮箱不能为空")
     private String mobile;
 
+    private String email;
+
     private Integer status;
 
     private Date createTime;

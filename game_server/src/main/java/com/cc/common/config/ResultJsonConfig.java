@@ -1,10 +1,11 @@
 package com.cc.common.config;
 
-import com.cc.common.Utils.Formatter;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,12 +13,15 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by AAS on 2018/3/21.
  */
 @Configuration
-public class ResultConfig {
+public class ResultJsonConfig {
+
     @Bean
     @Primary
     @ConditionalOnMissingBean(ObjectMapper.class)
@@ -26,7 +30,20 @@ public class ResultConfig {
 
         //objectMapper.setDateFormat(new SimpleDateFormat("yyyy.MM.dd hh:mm aa", Locale.ENGLISH));
 
-        objectMapper.setDateFormat(Formatter.DATE_WITH_LONG_TIME);
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+
+
+        /**
+         * 将Long,BigInteger序列化的时候,转化为String
+         */
+       /* SimpleModule simpleModule = new SimpleModule();
+
+        simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
+        simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
+        simpleModule.addSerializer(BigInteger.class, ToStringSerializer.instance);
+        objectMapper.registerModule(simpleModule);*/
+
+
 
         /**
          * 把返回的json key变为小写

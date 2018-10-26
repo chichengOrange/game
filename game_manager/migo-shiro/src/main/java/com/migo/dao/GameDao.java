@@ -8,4 +8,6 @@ package com.migo.dao;
 import com.migo.entity.Game;
 
 public interface GameDao extends BaseMapper<Game> {
+
+    int deleteBatch(Object[] ids);
 }
