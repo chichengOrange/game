@@ -97,9 +97,7 @@ h3 {
 
 .intro_name {
     margin-left: 45px;
-    /*
-    margin-top: 100px;
-    */
+    margin-top: 15px;
     text-align: left;
     width: 230px;
     word-wrap:break-word;

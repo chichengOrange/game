@@ -22,7 +22,7 @@ function suppleUI(object) {
             "</li>";
     } else {
 
-       if (sessionUser.rnameStatus == null || sessionUser.rnameStatus != 1) {
+        if (sessionUser.rnameStatus == null || sessionUser.rnameStatus != 1) {
             contact = "<li id='contact'><a href='#'>" + sessionUser.username + "</a> " +
                 "<ul> " +
                 "<li><a href='contact?show=realName'>实名认证</a></li> " +
@@ -49,4 +49,29 @@ function suppleUI(object) {
     }
 
     $('ul.sf-menu').sooperfish();
+
+
+    //禁止网页一些操作
+    ban()
+
+}
+
+
+
+
+function ban() {
+   /* document.oncontextmenu = function () {
+        //alert('请不要点击鼠标右键！');
+        return true;
+    }*/
+
+    document.onselectstart = function () {
+        //onselectstart="return false" 禁止选中网页上的内容
+        return false;
+    };
+
+   /* document.oncopy = function () {
+        //oncopy="return false" 防复制用户在网页上选中的内容
+        return true;
+    };*/
 }

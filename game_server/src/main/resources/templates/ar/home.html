@@ -40,7 +40,7 @@
                         <!--<div class="caption" style="margin-top: -180px;width: 50px;height: 160px">
                           夏夜
                         </div>-->
-                        <a class="thumb" th:href="${game.picture}">
+                        <a class="thumb" th:href="${game.picture}" th:title="${game.name}">
                             <!--<img style="width: 5px;height: 5px"  alt="one" />--></a>
                         <div class="caption portfolio_name_out">
                             <div class="image-title portfolio_name" th:text="${game.name}">&quot;Pier by the sea, Fowey,
@@ -87,12 +87,10 @@
         var supple = [[${supple}]];
         suppleUI(supple);
 
-
-
         // we only want these styles applied when javascript is enabled
         $('div.content').css('display', 'block');
         // initially set opacity on thumbs and add additional styling for hover effect on thumbs
-        var onMouseOutOpacity = 0.67;
+        const onMouseOutOpacity = 0.67;
         $('#thumbs ul.thumbs li, div.navigation a.pageLink').opacityrollover({
             mouseOutOpacity: onMouseOutOpacity,
             mouseOverOpacity: 1.0,
@@ -100,7 +98,7 @@
             exemptionSelector: '.selected'
         });
         // initialize advanced galleriffic gallery
-        var gallery = $('#thumbs').galleriffic({
+        const gallery = $('#thumbs').galleriffic({
             delay: 3500,
             numThumbs: 10,
             preloadAhead: 10,
@@ -118,11 +116,14 @@
             nextLinkText: '&rsaquo;',
             nextPageLinkText: 'Next &rsaquo;',
             prevPageLinkText: '&lsaquo; Prev',
-            enableHistory: true,
-            autoStart: false,
+            enableHistory: false, //指定当前幻灯片图像更改时，url的哈希值和浏览器的历史记录缓存是否应更新
+            enableKeyboardNavigation: true,//指定是否启用键盘导航
+            autoStart: false,//指定是否应播放幻灯片或页面首次加载
             syncTransitions: true,
-            defaultTransitionDuration: 600,
+            imageClick:false,//自己加的 使图片不能点击
+            defaultTransitionDuration: 800,
             onSlideChange: function (prevIndex, nextIndex) {
+
                 // 'this' refers to the gallery, which is an extension of $('#thumbs')
                 this.find('ul.thumbs').children()
                     .eq(prevIndex).fadeTo('fast', onMouseOutOpacity).end()
@@ -131,6 +132,20 @@
                 // update the photo index display
                 this.$captionContainer.find('div.photo-index')
                     .html('Photo ' + (nextIndex + 1) + ' of ' + this.data.length);
+
+                const last = this.data.length - 1;
+                const prevPageLink = $('.prev').css('visibility', 'visible');
+                const nextPageLink = $('.next').css('visibility', 'visible');
+
+                if (nextIndex == 0) {
+                    prevPageLink.css('visibility', 'hidden')
+                }
+                if (nextIndex == last){
+                    nextPageLink.css('visibility', 'hidden')
+                }
+                // show appropriate next / prev page links
+                this.fadeTo('fast', 1.0);
+
             },
             onPageTransitionOut: function (callback) {
                 this.fadeTo('fast', 0.0, callback);

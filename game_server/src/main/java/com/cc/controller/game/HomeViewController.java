@@ -1,11 +1,6 @@
 package com.cc.controller.game;
 
-import com.ancun.netsign.model.NetSignResponse;
-import com.cc.common.Utils.AncunUtil;
 import com.cc.common.annotation.IgnoreToken;
-import com.cc.common.enums.ResultCode;
-import com.cc.common.interceptor.MyAdapterInterceptor;
-import com.cc.common.result.PageResult;
 import com.cc.common.result.Result;
 import com.cc.controller.BaseController;
 import com.cc.model.game.Game;
@@ -22,6 +17,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,12 +32,9 @@ public class HomeViewController extends BaseController {
     private UserService userService;
 
     private final String HOME = "home";
-    /* private final String CATEGORY = "category";*/
-    private final String SHOW = "show";
-    private final String ABOUT = "about";
     private final String CONTACT = "contact";
     private final String LOGOUT = "logout";
-    private final String GAMEREPLAY = "gameReplay";
+    private final String REPLAY = "gameReplay";
 
 
     @IgnoreToken
@@ -74,28 +68,20 @@ public class HomeViewController extends BaseController {
                 model.addAttribute("gameList", gameList);
             }
             break;
-            case SHOW: {
-
-            }
-            break;
-            case ABOUT: {
-
-            }
-            break;
             case CONTACT: {
                 String show = request.getParameter("show");
-
-                if (StringUtil.isEmpty(show)) {
+                String shows = "showLogin,register,realName";
+                if (StringUtil.isEmpty(show) || shows.indexOf(show) == -1) {
                     request.getRequestDispatcher("home").forward(request, response);
                 } else if (show.equals("realName") && sessionUser == null) {
                     request.getRequestDispatcher("home").forward(request, response);
-                }else if((show.equals("showLogin") || show.equals("register"))&& sessionUser != null){
+                } else if ((show.equals("showLogin") || show.equals("register")) && sessionUser != null) {
                     request.getRequestDispatcher("home").forward(request, response);
                 }
 
             }
             break;
-            case GAMEREPLAY: {
+            case REPLAY: {
                 if (sessionUser == null) {
                     request.getRequestDispatcher("home").forward(request, response);
                 }
@@ -146,7 +132,7 @@ public class HomeViewController extends BaseController {
         request.getSession().setAttribute("user", user);
 
 
-        request.getSession().setMaxInactiveInterval(24*3600);//一天
+        request.getSession().setMaxInactiveInterval(24 * 3600);//一天
 
         return successResult(user);
     }

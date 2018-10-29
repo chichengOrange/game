@@ -14,7 +14,7 @@ $(function () {
                 sortable: false,
                 formatter: function (value, options, data) {
                     return value != null && value != "" ?
-                        '<a style="color:#337ab7;text-decoration: underline darkcyan"  onclick="downReplay(\'' + value + '\')">下载记录</a>' :
+                        '<a style="color:#337ab7;text-decoration: underline darkcyan"  href="http://47.99.61.151:9002/app/download?path=' + value + '" download="">下载记录</a>' :
                         '<span style="color: red">暂无记录</span>';
                 }
             },
@@ -26,7 +26,7 @@ $(function () {
                 sortable: false,
                 formatter: function (value, options, data) {
                     return value != null && value != "" ?
-                        '<a style="color:#337ab7;text-decoration: underline darkcyan"  onclick="downloadVisaFile(' + data.id + ')">下载</a>' :
+                        '<a style="color:#337ab7;text-decoration: underline darkcyan"  href="http://47.99.61.151:9002/app/gameReplay/download?replayId=' + data.id + '" download="">下载</a>' :
                         '<span style="color: red">暂无visa</span>';
                 }
             },
@@ -92,16 +92,5 @@ var vm = new Vue({
         }
     }
 });
-
-
-function downReplay(path) {
-
-    window.open("http://47.99.61.151:9002/app/download?path=" + path)
-}
-
-function downloadVisaFile(replayId) {
-
-    window.open("http://47.99.61.151:9002/app/gameReplay/download?replayId=" + replayId)
-}
 
 

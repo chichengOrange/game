@@ -86,6 +86,7 @@
 		enableKeyboardNavigation:  true,
 		autoStart:                 false,
 		syncTransitions:           false,
+        imageClick:           true,
 		defaultTransitionDuration: 1000,
 		onSlideChange:             undefined, // accepts a delegate like such: function(prevIndex, nextIndex) { ... }
 		onTransitionOut:           undefined, // accepts a delegate like such: function(slide, caption, isSync, callback) { ... }
@@ -625,11 +626,15 @@
 				var gallery = this;
 				var nextIndex = this.getNextIndex(imageData.index);
 
+
+				debugger;
+				const href =   this.imageClick ? 'href="#'+this.data[nextIndex].hash+'"' : 'href=""';
+
 				// Construct new hidden span for the image
 				var newSlide = this.$imageContainer
-					.append('<span class="image-wrapper current"><a class="advance-link" rel="history" href="#'+this.data[nextIndex].hash+'" title="'+imageData.title+'">&nbsp;</a></span>')
+					.append('<span class="image-wrapper current"><a class="advance-link" rel="history" '+href+' title="'+imageData.title+'">&nbsp;</a></span>')
 					.find('span.current').css('opacity', '0');
-				
+
 				newSlide.find('a')
 					.append(imageData.image)
 					.click(function(e) {

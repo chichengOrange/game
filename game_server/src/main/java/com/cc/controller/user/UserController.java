@@ -55,14 +55,10 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 登录
+     * 退出登录
      */
     @PostMapping("logout")
-    public Result login(HttpServletRequest request) {
-
-        //生成token
-        HttpSession session = request.getSession();
-        session.setMaxInactiveInterval(-1);
+    public Result logout(HttpServletRequest request) {
 
         Long user_id = (Long) request.getAttribute(MyAdapterInterceptor.LOGIN_USER_KEY);
         return saveOrUpdateResult(tokenService.deleteByPrimaryKey(user_id));

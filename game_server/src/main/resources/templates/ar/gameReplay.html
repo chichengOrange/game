@@ -70,13 +70,13 @@
                   { label: 'gameName', name: 'gameName',index:'gameName',align:'center', width: 50 },
                   {label: 'replayFile', name: 'replayFile', width: 30,align:'center',sortable:false,formatter: function (value,options,data) {
                           return value != null && value !="" ?
-                              '<a style="color:#337ab7;text-decoration: underline darkcyan"  onclick="downReplay(\''+value+'\')">下载记录</a>' :
+                              '<a style="color:#337ab7;text-decoration: underline darkcyan"  href="'+contextPath+'download?path='+value+'" download="">下载记录</a>' :
                               '<span style="color: red">暂无记录</span>';
                       }
                   },
                   {label: 'visaFile', name: 'visaFile', width: 30,align:'center',sortable:false,formatter: function (value,options,data) {
                           return value != null && value !="" ?
-                              '<a style="color:#337ab7;text-decoration: underline darkcyan"  onclick="downloadVisaFile('+data.id+')">下载</a>' :
+                              '<a style="color:#337ab7;text-decoration: underline darkcyan"  href="'+contextPath+'gameReplay/download?replayId='+data.id+'" download="">下载</a>' :
                               '<span style="color: red">暂无visa</span>';
                       }
                   },
@@ -110,15 +110,6 @@
               }
           });
       });
-
-      function downReplay(path) {
-          window.open(contextPath+"download?path="+path)
-      }
-
-      function downloadVisaFile(replayId) {
-
-          window.open(contextPath+"gameReplay/download?replayId="+replayId)
-      }
 
       /*]]>*/
 
