@@ -11,7 +11,6 @@ import com.cc.controller.BaseController;
 import com.cc.model.game.Game;
 import com.cc.model.game.GameDownloadLog;
 import com.cc.service.game.GameService;
-
 import com.github.pagehelper.util.StringUtil;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +46,8 @@ public class GameController extends BaseController {
     private GameService gameService;
 
 
+
     @IgnoreToken
-    @ApiIgnore
     @GetMapping({"/index/{id}"})
     public ModelAndView game(@PathVariable("id") Long id, Model model) {
         Game game = this.gameService.selectByPrimaryKey(id);
@@ -74,8 +73,9 @@ public class GameController extends BaseController {
         return new ModelAndView(viewName, "model", model);
     }
 
+
     @IgnoreToken
-    //@ApiIgnore
+    @ApiIgnore
     @GetMapping({"/readVideo/{id}"})
     public void readSource(@PathVariable Long id, HttpServletResponse response, HttpServletRequest request) throws IOException {
         Game game = this.gameService.selectByPrimaryKey(id);

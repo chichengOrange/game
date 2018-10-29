@@ -14,7 +14,7 @@ $(function () {
                 sortable: false,
                 formatter: function (value, options, data) {
                     return value != null && value != "" ?
-                        '<a style="color:#337ab7;text-decoration: underline darkcyan"  href="http://47.99.61.151:9002/app/download?path=' + value + '" download="">下载记录</a>' :
+                        '<a style="color:#337ab7;text-decoration: underline darkcyan"  href="../download?path=' + value + '" download="">下载记录</a>' :
                         '<span style="color: red">暂无记录</span>';
                 }
             },
