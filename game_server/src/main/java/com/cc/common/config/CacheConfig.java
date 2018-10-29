@@ -26,8 +26,6 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair;
 
 public class CacheConfig extends CachingConfigurerSupport {
-    public CacheConfig() {
-    }
 
     @Bean
     public KeyGenerator KeyGenerator() {

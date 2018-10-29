@@ -20,8 +20,6 @@ public class AdapterConfig implements WebMvcConfigurer {
     @Autowired
     private MyAdapterInterceptor myAdapterInterceptor;
 
-    public AdapterConfig() {
-    }
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(new String[]{"/static/**"}).addResourceLocations(new String[]{"classpath:/static/"});
